@@ -5,7 +5,7 @@ import streetFragmentShader from 'shaders/streetshader.frag!text';
 import _ from 'lodash';
 
 var MIN_AREA = 0.16;
-var MIN_SIDE_RATIO = 0.2;
+var MIN_SIDE_RATIO = 0.3;
 
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
@@ -19,14 +19,14 @@ var geometry = new THREE.BufferGeometry();
 // list of blocks represented as quads => blocks[block][vertex][X/Y/Z]
 var quadBlocks = [
 	[
-		[-5.0, -5.0, 0.0],
-		[5.0, -5.0, 0.0],
-		[5.0, 5.0, 0.0],
-		[-5.0, 5.0, 0.0]
+		[-3.0, -3.0, 0.0],
+		[3.0, -3.0, 0.0],
+		[3.0, 3.0, 0.0],
+		[-3.0, 3.0, 0.0]
 	]
 ];
-
-_.each(quadBlocks, (block) => {
+while(quadBlocks.length < 32){
+quadBlocks = _.flatMap(quadBlocks, (block) => {
 	//get distances to adjecent vertices
 	var blockDim = dimensions(block);
 	var longSide = Math.max(...blockDim);
@@ -40,12 +40,46 @@ _.each(quadBlocks, (block) => {
 	}
 	var cutInterval = longSide - cutPadding * 2;
 	var cutOffset = Math.random() * cutInterval + cutPadding;
-
+	var cutPoint1;
+	var cutPoint2;
+	var newBlock1;
+	var newBlock2;
 	//lerp cutting points
-	var cutPoint1 = lerp(block[0], block[1], cutOffset / blockDim[0]);
-	var cutPoint2 = lerp(block[3], block[2], cutOffset / blockDim[0]);
-});
+	if(blockDim[0] >= blockDim[1]){
+		cutPoint1 = lerp(block[0], block[1], cutOffset / blockDim[0]);
+		cutPoint2 = lerp(block[3], block[2], cutOffset / blockDim[0]);
+		newBlock1 = [
+			block[3].slice(),
+			block[0].slice(),
+			cutPoint1.slice(),
+			cutPoint2.slice()
+		];
+		newBlock2 = [
+			block[1].slice(),
+			block[2].slice(),
+			cutPoint2.slice(),
+			cutPoint1.slice()
+		];
+	} else {
+		cutPoint1 = lerp(block[0], block[3], cutOffset / blockDim[1]);
+		cutPoint2 = lerp(block[1], block[2], cutOffset / blockDim[1]);
+		newBlock1 = [
+			block[0].slice(),
+			block[1].slice(),
+			cutPoint2.slice(),
+			cutPoint1.slice()
+		];
+		newBlock2 = [
+			block[2].slice(),
+			block[3].slice(),
+			cutPoint1.slice(),
+			cutPoint2.slice()
+		];
+	}
 
+	return [newBlock1, newBlock2];
+});
+}
 function lerp(p1, p2, t){
 	return [
 		(1 - t) * p1[0] + t * p2[0],
@@ -89,7 +123,6 @@ var faceCoordinates = _.flatMap(triangulatedBlocks, (block)=>{
 		0.0, 0.0
 	];
 });
-console.log(faceCoordinates)
 var blockTriangleList = _.flattenDeep(triangulatedBlocks);
 
 var vertices = new Float32Array( blockTriangleList );
@@ -107,7 +140,6 @@ var material = new THREE.ShaderMaterial( {
 		fragmentShader: streetFragmentShader
 	} );
 var mesh = new THREE.Mesh( geometry, material );
-
 scene.add( mesh );
 //LIGHT
 // ambient

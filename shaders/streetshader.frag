@@ -3,6 +3,6 @@ uniform vec4 streetcolor;
 
 varying vec2 vfaceCoordinates;
 void main() {
-	vec4 color = (vfaceCoordinates.x < 0.2 || vfaceCoordinates.y < 0.2) ? streetcolor : groundcolor;
+	vec4 color = (vfaceCoordinates.x < 0.07 || vfaceCoordinates.y < 0.07) ? streetcolor : groundcolor;
     gl_FragColor = color;
 }
