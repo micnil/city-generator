@@ -2,6 +2,7 @@
   "jspm": {
     "dependencies": {
       "lodash": "npm:lodash@^4.0.0",
+      "simplex-noise": "npm:simplex-noise@^2.2.0",
       "text": "github:systemjs/plugin-text@^0.0.4",
       "three": "github:mrdoob/three.js@master"
     },

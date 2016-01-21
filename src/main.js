@@ -3,6 +3,9 @@ import CityGenerator from 'src/city-generator';
 import streetVertexShader from 'shaders/streetshader.vert!text';
 import streetFragmentShader from 'shaders/streetshader.frag!text';
 import _ from 'lodash';
+import SimplexNoise from 'simplex-noise';
+
+var simplex = new SimplexNoise(Math.random);
 
 var MIN_AREA = 0.16;
 var MIN_SIDE_RATIO = 0.3;
@@ -16,18 +19,18 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 var geometry = new THREE.BufferGeometry();
-
+var size = 4;
 // list of blocks represented as quads => blocks[block][vertex][X/Y/Z]
 var quadBlocks = [
 	[
-		[-3.0, -3.0, 0.0],
-		[3.0, -3.0, 0.0],
-		[3.0, 3.0, 0.0],
-		[-3.0, 3.0, 0.0]
+		[-size/2, -size/2.0, 0.0],
+		[size/2.0, -size/2.0, 0.0],
+		[size/2.0, size/2.0, 0.0],
+		[-size/2.0, size/2.0, 0.0]
 	]
 ];
 var iterations = 0;
-while(iterations < 10){
+while(iterations < 15){
 	iterations+=1;
 	quadBlocks = _.flatMap(quadBlocks, (block) => {
 
@@ -151,14 +154,18 @@ var faceDimensions = _.flatMap(quadBlocks, (block)=>{
 
 var buildings = _.map(quadBlocks, (block) => {
 	let dim = dimensions(block);
+	let center = centerOf(block);
 	dim[0] -= streetWidth;
 	dim[1] -= streetWidth;
 	let height = 0.3;
+	height += Math.abs(simplex.noise2D(center[0]/size, center[1]/size)) * 0.6;
+	height += simplex.noise2D(center[0], center[1]) * 0.3;
+	height += simplex.noise2D(center[0]*2, center[1]*2) * 0.1;
+	console.log(height);
 	let geometry = new THREE.BoxGeometry( ...dim, height );
 	let material = new THREE.MeshPhongMaterial( { color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } ) 
 	let building = new THREE.Mesh( geometry, material );
 
-	let center = centerOf(block);
 	building.position.set(center[0], center[1], height/2 + center[2]);
 	return building;
 });
@@ -184,7 +191,7 @@ var material = new THREE.ShaderMaterial( {
 	} );
 var city = new THREE.Mesh( geometry, material );
 scene.add( city );
-//_.each(buildings, (building)=>city.add(building));
+_.each(buildings, (building)=>city.add(building));
 
 city.rotation.x -= Math.PI / 4;
 //LIGHT
@@ -197,7 +204,7 @@ var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );
 directionalLight.position.set( -1, 1, 1 );
 scene.add( directionalLight );
 
-camera.position.z = 5.5;
+camera.position.z = 4;
 
 var render = function () {
 	requestAnimationFrame( render );

@@ -18,6 +18,7 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "core-js": "npm:core-js@1.2.6",
     "lodash": "npm:lodash@4.0.0",
+    "simplex-noise": "npm:simplex-noise@2.2.0",
     "text": "github:systemjs/plugin-text@0.0.4",
     "three": "github:mrdoob/three.js@master",
     "github:jspm/nodelibs-assert@0.1.0": {
