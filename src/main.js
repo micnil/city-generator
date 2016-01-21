@@ -25,8 +25,11 @@ var quadBlocks = [
 		[-3.0, 3.0, 0.0]
 	]
 ];
-while(quadBlocks.length < 32){
+var iterations = 0;
+while(iterations < 3){
+	iterations+=1;
 quadBlocks = _.flatMap(quadBlocks, (block) => {
+
 	//get distances to adjecent vertices
 	var blockDim = dimensions(block);
 	var longSide = Math.max(...blockDim);
@@ -36,50 +39,59 @@ quadBlocks = _.flatMap(quadBlocks, (block) => {
 	var paddingRule2 = shortSide * MIN_SIDE_RATIO;
 	var cutPadding = Math.max(paddingRule1, paddingRule2);
 	if(cutPadding*2 > longSide){
-		return false;
+		return [block];
 	}
+
 	var cutInterval = longSide - cutPadding * 2;
 	var cutOffset = Math.random() * cutInterval + cutPadding;
 	var cutPoint1;
 	var cutPoint2;
 	var newBlock1;
 	var newBlock2;
+
 	//lerp cutting points
-	if(blockDim[0] >= blockDim[1]){
+	if(blockDim[0] > blockDim[1]){
 		cutPoint1 = lerp(block[0], block[1], cutOffset / blockDim[0]);
 		cutPoint2 = lerp(block[3], block[2], cutOffset / blockDim[0]);
+
 		newBlock1 = [
 			block[3].slice(),
 			block[0].slice(),
 			cutPoint1.slice(),
 			cutPoint2.slice()
 		];
+
 		newBlock2 = [
 			block[1].slice(),
 			block[2].slice(),
 			cutPoint2.slice(),
 			cutPoint1.slice()
 		];
+
 	} else {
 		cutPoint1 = lerp(block[0], block[3], cutOffset / blockDim[1]);
 		cutPoint2 = lerp(block[1], block[2], cutOffset / blockDim[1]);
+
 		newBlock1 = [
 			block[0].slice(),
 			block[1].slice(),
 			cutPoint2.slice(),
 			cutPoint1.slice()
 		];
+
 		newBlock2 = [
 			block[2].slice(),
 			block[3].slice(),
 			cutPoint1.slice(),
 			cutPoint2.slice()
 		];
+
 	}
 
 	return [newBlock1, newBlock2];
 });
 }
+
 function lerp(p1, p2, t){
 	return [
 		(1 - t) * p1[0] + t * p2[0],
@@ -87,21 +99,15 @@ function lerp(p1, p2, t){
 		(1 - t) * p1[2] + t * p2[2]
 	];
 }
+
 function dimensions(block){
-	return [
-		distance(block[0], block[1]),
-		distance(block[0], block[3])
-	]
+	return [Math.abs(block[0][0] - block[2][0]), Math.abs(block[0][1]- block[2][1])];
 }
-function distance(p1, p2){
-	return magnitude([Math.abs(p2[0] - p1[0]), Math.abs(p2[1]- p1[1])]);
-}
-function magnitude(v){
-	return Math.sqrt(Math.pow(v[0], 2) + Math.pow(v[1], 2));
-}
+
 // triangulate the blocks
 var triangulatedBlocks = _.map(quadBlocks, (block) => {
 	// slice to break reference from quadBlocks array.
+
 	return [
 		block[0].slice(),
 		block[1].slice(),
@@ -111,25 +117,40 @@ var triangulatedBlocks = _.map(quadBlocks, (block) => {
 		block[3].slice()
 	];
 });
-
+//triangle surface coordinates relative right angled point
 var faceCoordinates = _.flatMap(triangulatedBlocks, (block)=>{
 	return [
-		// distance X							distance Y
-		Math.abs(block[0][0]-block[1][0]), Math.abs(block[0][1]-block[1][1]),
+		// distance X			 distance Y
+		block[0][0]-block[1][0], block[0][1]-block[1][1],
 		0.0, 0.0,
-		Math.abs(block[2][0]-block[1][0]), Math.abs(block[2][1]-block[1][1]),
-		Math.abs(block[0][0]-block[5][0]), Math.abs(block[0][1]-block[5][1]),
-		Math.abs(block[2][0]-block[5][0]), Math.abs(block[2][1]-block[5][1]),
+		block[2][0]-block[1][0], block[2][1]-block[1][1],
+		block[0][0]-block[5][0], block[0][1]-block[5][1],
+		block[2][0]-block[5][0], block[2][1]-block[5][1],
 		0.0, 0.0
 	];
 });
+
+var faceDimensions = _.flatMap(quadBlocks, (block)=>{
+	let dim = dimensions(block);
+	return [
+		dim[0], dim[1],
+		dim[0], dim[1],
+		dim[0], dim[1],
+		dim[0], dim[1],
+		dim[0], dim[1],
+		dim[0], dim[1]
+	];
+});
+console.log(faceDimensions);
 var blockTriangleList = _.flattenDeep(triangulatedBlocks);
 
 var vertices = new Float32Array( blockTriangleList );
 var coordinates =  new Float32Array(faceCoordinates);
+var dimensions = new Float32Array(faceDimensions);
 
 geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
 geometry.addAttribute( 'afaceCoordinates', new THREE.BufferAttribute( coordinates, 2 ) );
+geometry.addAttribute( 'afaceDimensions', new THREE.BufferAttribute( dimensions, 2 ) );
 
 var material = new THREE.ShaderMaterial( {
 		uniforms: {
