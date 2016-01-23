@@ -35,7 +35,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 var geometry = new THREE.BufferGeometry();
-var size = 4;
+var size = 6;
 // list of blocks represented as quads => blocks[block][vertex][X/Y/Z]
 var quadBlocks = [
 	[
@@ -177,10 +177,20 @@ var buildings = _.map(quadBlocks, (block) => {
 	height += Math.abs(simplex.noise2D(center[0]/size, center[1]/size)) * 0.6;
 	height += simplex.noise2D(center[0], center[1]) * 0.3;
 	height += simplex.noise2D(center[0]*2, center[1]*2) * 0.1;
+
+	let wallNoise = simplex.noise2D(center[0], center[1])/10;
+	//let wallColor = new THREE.Vector3(0.8 + wallNoise, 0.5 + wallNoise, 0.3 + wallNoise);
+	let wallColor = new THREE.Vector3(
+		Math.random() * 0.3 + 0.35,
+		Math.random() * 0.3 + 0.35,
+		Math.random() * 0.3 + 0.35
+	);
+	console.log(wallColor)
 	let geometry = new THREE.BoxGeometry( ...dim, height );
 	let material = CustomLambertMaterial( {
 		uniforms: {
-			dimensions: { type: "v3", value: new THREE.Vector3(dim[0], dim[1], height)}
+			dimensions: { type: "v3", value: new THREE.Vector3(dim[0], dim[1], height)},
+			uWallColor: { type: "v3", value: wallColor}
 		},
 		vertParams: buildingVertParams,
 		fragParams: buildingFragParams,
@@ -228,14 +238,15 @@ scene.add( city );
 _.each(buildings, (building)=>city.add(building));
 
 city.rotation.x -= Math.PI / 4;
+
 //LIGHT
 // ambient
 var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 scene.add( light );
 
 // directional
-var directionalLight = new THREE.DirectionalLight( 0xffffff, 0.7 );
-directionalLight.position.set( -1, 1, 1 );
+var directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 );
+directionalLight.position.set( -0.5, 1, 2 );
 scene.add( directionalLight );
 
 camera.position.z = 4;
