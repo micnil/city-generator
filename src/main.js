@@ -2,9 +2,25 @@ import THREE from 'three';
 import CityGenerator from 'src/city-generator';
 import streetVertexShader from 'shaders/streetshader.vert!text';
 import streetFragmentShader from 'shaders/streetshader.frag!text';
+import buildingVertexShader from 'shaders/buildingshader.vert!text';
+import buildingFragmentShader from 'shaders/buildingshader.frag!text';
 import _ from 'lodash';
 import SimplexNoise from 'simplex-noise';
+import {CustomLambertMaterial} from 'src/custom-lambert-material';
 
+//import building shaders
+import buildingVertParams from 'shaders/building-pars.vert!text';
+import buildingVertShader from 'shaders/building-chunk.vert!text';
+import buildingFragParams from 'shaders/building-pars.frag!text';
+import buildingFragShader from 'shaders/building-chunk.frag!text';
+
+//import street shaders
+import streetVertParams from 'shaders/street-pars.vert!text';
+import streetVertShader from 'shaders/street-chunk.vert!text';
+import streetFragParams from 'shaders/street-pars.frag!text';
+import streetFragShader from 'shaders/street-chunk.frag!text';
+
+console.log(CustomLambertMaterial);
 var simplex = new SimplexNoise(Math.random);
 
 var MIN_AREA = 0.16;
@@ -161,9 +177,16 @@ var buildings = _.map(quadBlocks, (block) => {
 	height += Math.abs(simplex.noise2D(center[0]/size, center[1]/size)) * 0.6;
 	height += simplex.noise2D(center[0], center[1]) * 0.3;
 	height += simplex.noise2D(center[0]*2, center[1]*2) * 0.1;
-	console.log(height);
 	let geometry = new THREE.BoxGeometry( ...dim, height );
-	let material = new THREE.MeshPhongMaterial( { color: 0xdddddd, specular: 0x009900, shininess: 30, shading: THREE.FlatShading } ) 
+	let material = CustomLambertMaterial( {
+		uniforms: {
+			dimensions: { type: "v3", value: new THREE.Vector3(dim[0], dim[1], height)}
+		},
+		vertParams: buildingVertParams,
+		fragParams: buildingFragParams,
+		vertChunk: buildingVertShader,
+		fragChunk: buildingFragShader
+	} );
 	let building = new THREE.Mesh( geometry, material );
 
 	building.position.set(center[0], center[1], height/2 + center[2]);
@@ -180,7 +203,7 @@ geometry.addAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
 geometry.addAttribute( 'afaceCoordinates', new THREE.BufferAttribute( coordinates, 2 ) );
 geometry.addAttribute( 'afaceDimensions', new THREE.BufferAttribute( dimensions, 2 ) );
 
-var material = new THREE.ShaderMaterial( {
+/*var material = new THREE.ShaderMaterial( {
 		uniforms: {
 			groundcolor: { type: "v4", value: new THREE.Vector4(0.96, 0.64, 0.38, 1.0) },
 			streetcolor: { type: "v4", value: new THREE.Vector4(0.30, 0.30, 0.30, 1.0) },
@@ -188,6 +211,17 @@ var material = new THREE.ShaderMaterial( {
 		},
 		vertexShader: streetVertexShader,
 		fragmentShader: streetFragmentShader
+	} );*/
+var material = CustomLambertMaterial( {
+		uniforms: {
+			groundcolor: { type: "v4", value: new THREE.Vector4(0.96, 0.64, 0.38, 1.0) },
+			streetcolor: { type: "v4", value: new THREE.Vector4(0.30, 0.30, 0.30, 1.0) },
+			streetWidth: { type: "f", value: streetWidth}
+		},
+		vertParams: streetVertParams,
+		fragParams: streetFragParams,
+		vertChunk: streetVertShader,
+		fragChunk: streetFragShader
 	} );
 var city = new THREE.Mesh( geometry, material );
 scene.add( city );

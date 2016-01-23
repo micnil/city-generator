@@ -1,0 +1,2 @@
+vPosition = position;
+vNormal = normal;
