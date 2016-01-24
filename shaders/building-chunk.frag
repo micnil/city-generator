@@ -4,7 +4,7 @@ float windowWidth = 0.09;
 vec3 glassColor = vec3(0.1);
 vec3 windowEdgeColor = vec3(0.9);
 vec3 wallColor = vec3(uWallColor);
-vec3 roofColor = vec3(0.5, 0.5, 0.5);
+vec3 roofColor = vec3(uRoofColor);
 vec3 position = vec3(vPosition);
 
 wallColor += wallColor * snoise(vUv/3.0);

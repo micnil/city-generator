@@ -3,6 +3,7 @@ varying vec3 vNormal;
 varying vec2 vUv;
 uniform vec3 dimensions;
 uniform vec3 uWallColor;
+uniform vec3 uRoofColor;
 
 //
 // Description : Array and textureless GLSL 2D simplex noise function.
