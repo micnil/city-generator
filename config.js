@@ -21,6 +21,7 @@ System.config({
     "simplex-noise": "npm:simplex-noise@2.2.0",
     "text": "github:systemjs/plugin-text@0.0.4",
     "three": "github:mrdoob/three.js@master",
+    "three-orbit-controls": "npm:three-orbit-controls@72.0.0",
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.3.0"
     },

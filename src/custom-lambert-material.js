@@ -3,6 +3,7 @@ export function CustomLambertMaterial(options){
 
 	return new THREE.ShaderMaterial({
 		lights: true,
+		fog: true,
 		uniforms: THREE.UniformsUtils.merge( [
 
 			THREE.UniformsLib[ "common" ],
@@ -11,7 +12,7 @@ export function CustomLambertMaterial(options){
 			THREE.UniformsLib[ "shadowmap" ],
 
 			{
-				"emissive" : { type: "c", value: new THREE.Color( 0x000000 ) }
+				"emissive" : { type: "c", value: new THREE.Color( 0x000000 ) },
 			},
 			options.uniforms
 
