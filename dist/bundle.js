@@ -1,5 +1,13 @@
+"format global";
+
+!function(e){function r(e,r,o){return 4===arguments.length?t.apply(this,arguments):void n(e,{declarative:!0,deps:r,declare:o})}function t(e,r,t,o){n(e,{declarative:!1,deps:r,executingRequire:t,execute:o})}function n(e,r){r.name=e,e in p||(p[e]=r),r.normalizedDeps=r.deps}function o(e,r){if(r[e.groupIndex]=r[e.groupIndex]||[],-1==v.call(r[e.groupIndex],e)){r[e.groupIndex].push(e);for(var t=0,n=e.normalizedDeps.length;n>t;t++){var a=e.normalizedDeps[t],u=p[a];if(u&&!u.evaluated){var d=e.groupIndex+(u.declarative!=e.declarative);if(void 0===u.groupIndex||u.groupIndex<d){if(void 0!==u.groupIndex&&(r[u.groupIndex].splice(v.call(r[u.groupIndex],u),1),0==r[u.groupIndex].length))throw new TypeError("Mixed dependency cycle detected");u.groupIndex=d}o(u,r)}}}}function a(e){var r=p[e];r.groupIndex=0;var t=[];o(r,t);for(var n=!!r.declarative==t.length%2,a=t.length-1;a>=0;a--){for(var u=t[a],i=0;i<u.length;i++){var s=u[i];n?d(s):l(s)}n=!n}}function u(e){return x[e]||(x[e]={name:e,dependencies:[],exports:{},importers:[]})}function d(r){if(!r.module){var t=r.module=u(r.name),n=r.module.exports,o=r.declare.call(e,function(e,r){if(t.locked=!0,"object"==typeof e)for(var o in e)n[o]=e[o];else n[e]=r;for(var a=0,u=t.importers.length;u>a;a++){var d=t.importers[a];if(!d.locked)for(var i=0;i<d.dependencies.length;++i)d.dependencies[i]===t&&d.setters[i](n)}return t.locked=!1,r},r.name);t.setters=o.setters,t.execute=o.execute;for(var a=0,i=r.normalizedDeps.length;i>a;a++){var l,s=r.normalizedDeps[a],c=p[s],v=x[s];v?l=v.exports:c&&!c.declarative?l=c.esModule:c?(d(c),v=c.module,l=v.exports):l=f(s),v&&v.importers?(v.importers.push(t),t.dependencies.push(v)):t.dependencies.push(null),t.setters[a]&&t.setters[a](l)}}}function i(e){var r,t=p[e];if(t)t.declarative?c(e,[]):t.evaluated||l(t),r=t.module.exports;else if(r=f(e),!r)throw new Error("Unable to load dependency "+e+".");return(!t||t.declarative)&&r&&r.__useDefault?r["default"]:r}function l(r){if(!r.module){var t={},n=r.module={exports:t,id:r.name};if(!r.executingRequire)for(var o=0,a=r.normalizedDeps.length;a>o;o++){var u=r.normalizedDeps[o],d=p[u];d&&l(d)}r.evaluated=!0;var c=r.execute.call(e,function(e){for(var t=0,n=r.deps.length;n>t;t++)if(r.deps[t]==e)return i(r.normalizedDeps[t]);throw new TypeError("Module "+e+" not declared as a dependency.")},t,n);c&&(n.exports=c),t=n.exports,t&&t.__esModule?r.esModule=t:r.esModule=s(t)}}function s(r){if(r===e)return r;var t={};if("object"==typeof r||"function"==typeof r)if(g){var n;for(var o in r)(n=Object.getOwnPropertyDescriptor(r,o))&&h(t,o,n)}else{var a=r&&r.hasOwnProperty;for(var o in r)(!a||r.hasOwnProperty(o))&&(t[o]=r[o])}return t["default"]=r,h(t,"__useDefault",{value:!0}),t}function c(r,t){var n=p[r];if(n&&!n.evaluated&&n.declarative){t.push(r);for(var o=0,a=n.normalizedDeps.length;a>o;o++){var u=n.normalizedDeps[o];-1==v.call(t,u)&&(p[u]?c(u,t):f(u))}n.evaluated||(n.evaluated=!0,n.module.execute.call(e))}}function f(e){if(D[e])return D[e];if("@node/"==e.substr(0,6))return y(e.substr(6));var r=p[e];if(!r)throw"Module "+e+" not present.";return a(e),c(e,[]),p[e]=void 0,r.declarative&&h(r.module.exports,"__esModule",{value:!0}),D[e]=r.declarative?r.module.exports:r.esModule}var p={},v=Array.prototype.indexOf||function(e){for(var r=0,t=this.length;t>r;r++)if(this[r]===e)return r;return-1},g=!0;try{Object.getOwnPropertyDescriptor({a:0},"a")}catch(m){g=!1}var h;!function(){try{Object.defineProperty({},"a",{})&&(h=Object.defineProperty)}catch(e){h=function(e,r,t){try{e[r]=t.value||t.get.call(e)}catch(n){}}}}();var x={},y="undefined"!=typeof System&&System._nodeRequire||"undefined"!=typeof require&&require.resolve&&"undefined"!=typeof process&&require,D={"@empty":{}};return function(e,n,o){return function(a){a(function(a){for(var u={_nodeRequire:y,register:r,registerDynamic:t,get:f,set:function(e,r){D[e]=r},newModule:function(e){return e}},d=0;d<n.length;d++)(function(e,r){r&&r.__esModule?D[e]=r:D[e]=s(r)})(n[d],arguments[d]);o(u);var i=f(e[0]);if(e.length>1)for(var d=1;d<e.length;d++)f(e[d]);return i.__useDefault?i["default"]:i})}}}("undefined"!=typeof self?self:global)
+
+(["1"], [], function($__System) {
+
+!function(){var t=$__System;if("undefined"!=typeof window&&"undefined"!=typeof document&&window.location)var s=location.protocol+"//"+location.hostname+(location.port?":"+location.port:"");t.set("@@cjs-helpers",t.newModule({getPathVars:function(t){var n,o=t.lastIndexOf("!");n=-1!=o?t.substr(0,o):t;var e=n.split("/");return e.pop(),e=e.join("/"),"file:///"==n.substr(0,8)?(n=n.substr(7),e=e.substr(7),isWindows&&(n=n.substr(1),e=e.substr(1))):s&&n.substr(0,s.length)===s&&(n=n.substr(s.length),e=e.substr(s.length)),{filename:n,dirname:e}}}))}();
+!function(e){function n(e,n){e=e.replace(l,"");var r=e.match(s),i=(r[1].split(",")[n]||"require").replace(p,""),t=c[i]||(c[i]=new RegExp(u+i+a,"g"));t.lastIndex=0;for(var o,f=[];o=t.exec(e);)f.push(o[2]||o[3]);return f}function r(e,n,i,t){if("object"==typeof e&&!(e instanceof Array))return r.apply(null,Array.prototype.splice.call(arguments,1,arguments.length-1));if("string"==typeof e&&"function"==typeof n&&(e=[e]),!(e instanceof Array)){if("string"==typeof e){var f=o.get(e);return f.__useDefault?f["default"]:f}throw new TypeError("Invalid require")}for(var l=[],u=0;u<e.length;u++)l.push(o["import"](e[u],t));Promise.all(l).then(function(e){n&&n.apply(null,e)},i)}function i(i,t,l){"string"!=typeof i&&(l=t,t=i,i=null),t instanceof Array||(l=t,t=["require","exports","module"].splice(0,l.length)),"function"!=typeof l&&(l=function(e){return function(){return e}}(l)),void 0===t[t.length-1]&&t.pop();var u,a,s;-1!=(u=f.call(t,"require"))&&(t.splice(u,1),i||(t=t.concat(n(l.toString(),u)))),-1!=(a=f.call(t,"exports"))&&t.splice(a,1),-1!=(s=f.call(t,"module"))&&t.splice(s,1);var p={name:i,deps:t,execute:function(n,i,f){for(var p=[],c=0;c<t.length;c++)p.push(n(t[c]));f.uri=f.id,f.config=function(){},-1!=s&&p.splice(s,0,f),-1!=a&&p.splice(a,0,i),-1!=u&&p.splice(u,0,function(e,i,t){return"string"==typeof e&&"function"!=typeof i?n(e):r.call(o,e,i,t,f.id)});var d=l.apply(-1==a?e:i,p);return"undefined"==typeof d&&f&&(d=f.exports),"undefined"!=typeof d?d:void 0}};if(i)d.anonDefine||d.isBundle?(d.anonDefine&&d.anonDefine.name&&o.registerDynamic(d.anonDefine.name,d.anonDefine.deps,!1,d.anonDefine.execute),d.anonDefine=null):d.anonDefine=p,d.isBundle=!0,o.registerDynamic(i,p.deps,!1,p.execute);else{if(d.anonDefine)throw new TypeError("Multiple defines for anonymous module");d.anonDefine=p}}function t(n){d.anonDefine=null,d.isBundle=!1;var r=e.module,t=e.exports,o=e.define;return e.module=void 0,e.exports=void 0,e.define=i,function(){e.define=o,e.module=r,e.exports=t}}var o=$__System,f=Array.prototype.indexOf||function(e){for(var n=0,r=this.length;r>n;n++)if(this[n]===e)return n;return-1},l=/(\/\*([\s\S]*?)\*\/|([^:]|^)\/\/(.*)$)/gm,u="(?:^|[^$_a-zA-Z\\xA0-\\uFFFF.])",a="\\s*\\(\\s*(\"([^\"]+)\"|'([^']+)')\\s*\\)",s=/\(([^\)]*)\)/,p=/^\s+|\s+$/g,c={};i.amd={};var d={isBundle:!1,anonDefine:null};o.set("@@amd-helpers",o.newModule({createDefine:t,require:r,define:i,lastModule:d})),o.amdDefine=i,o.amdRequire=r}("undefined"!=typeof self?self:global);
 "bundle";
-System.registerDynamic("npm:three-orbit-controls@72.0.0/index", [], true, function($__require, exports, module) {
+$__System.registerDynamic("2", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -622,23 +630,23 @@ System.registerDynamic("npm:three-orbit-controls@72.0.0/index", [], true, functi
   return module.exports;
 });
 
-System.registerDynamic("npm:three-orbit-controls@72.0.0", ["npm:three-orbit-controls@72.0.0/index"], true, function($__require, exports, module) {
+$__System.registerDynamic("3", ["2"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('npm:three-orbit-controls@72.0.0/index');
+  module.exports = $__require('2');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.string-at", ["npm:core-js@1.2.6/library/modules/$.to-integer", "npm:core-js@1.2.6/library/modules/$.defined"], true, function($__require, exports, module) {
+$__System.registerDynamic("4", ["5", "6"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var toInteger = $__require('npm:core-js@1.2.6/library/modules/$.to-integer'),
-      defined = $__require('npm:core-js@1.2.6/library/modules/$.defined');
+  var toInteger = $__require('5'),
+      defined = $__require('6');
   module.exports = function(TO_STRING) {
     return function(that, pos) {
       var s = String(defined(that)),
@@ -656,7 +664,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.string-at", ["npm:co
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.library", [], true, function($__require, exports, module) {
+$__System.registerDynamic("7", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -666,17 +674,17 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.library", [], true, 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.redefine", ["npm:core-js@1.2.6/library/modules/$.hide"], true, function($__require, exports, module) {
+$__System.registerDynamic("8", ["9"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.hide');
+  module.exports = $__require('9');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.property-desc", [], true, function($__require, exports, module) {
+$__System.registerDynamic("a", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -693,7 +701,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.property-desc", [], 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.fails", [], true, function($__require, exports, module) {
+$__System.registerDynamic("b", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -709,12 +717,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.fails", [], true, fu
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.descriptors", ["npm:core-js@1.2.6/library/modules/$.fails"], true, function($__require, exports, module) {
+$__System.registerDynamic("c", ["b"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = !$__require('npm:core-js@1.2.6/library/modules/$.fails')(function() {
+  module.exports = !$__require('b')(function() {
     return Object.defineProperty({}, 'a', {get: function() {
         return 7;
       }}).a != 7;
@@ -723,14 +731,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.descriptors", ["npm:
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.hide", ["npm:core-js@1.2.6/library/modules/$", "npm:core-js@1.2.6/library/modules/$.property-desc", "npm:core-js@1.2.6/library/modules/$.descriptors"], true, function($__require, exports, module) {
+$__System.registerDynamic("9", ["d", "a", "c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$'),
-      createDesc = $__require('npm:core-js@1.2.6/library/modules/$.property-desc');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.descriptors') ? function(object, key, value) {
+  var $ = $__require('d'),
+      createDesc = $__require('a');
+  module.exports = $__require('c') ? function(object, key, value) {
     return $.setDesc(object, key, createDesc(1, value));
   } : function(object, key, value) {
     object[key] = value;
@@ -740,17 +748,17 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.hide", ["npm:core-js
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-create", ["npm:core-js@1.2.6/library/modules/$", "npm:core-js@1.2.6/library/modules/$.property-desc", "npm:core-js@1.2.6/library/modules/$.set-to-string-tag", "npm:core-js@1.2.6/library/modules/$.hide", "npm:core-js@1.2.6/library/modules/$.wks"], true, function($__require, exports, module) {
+$__System.registerDynamic("e", ["d", "a", "f", "9", "10"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $ = $__require('npm:core-js@1.2.6/library/modules/$'),
-      descriptor = $__require('npm:core-js@1.2.6/library/modules/$.property-desc'),
-      setToStringTag = $__require('npm:core-js@1.2.6/library/modules/$.set-to-string-tag'),
+  var $ = $__require('d'),
+      descriptor = $__require('a'),
+      setToStringTag = $__require('f'),
       IteratorPrototype = {};
-  $__require('npm:core-js@1.2.6/library/modules/$.hide')(IteratorPrototype, $__require('npm:core-js@1.2.6/library/modules/$.wks')('iterator'), function() {
+  $__require('9')(IteratorPrototype, $__require('10')('iterator'), function() {
     return this;
   });
   module.exports = function(Constructor, NAME, next) {
@@ -761,7 +769,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-create", ["npm:
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.has", [], true, function($__require, exports, module) {
+$__System.registerDynamic("11", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -774,14 +782,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.has", [], true, func
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-to-string-tag", ["npm:core-js@1.2.6/library/modules/$", "npm:core-js@1.2.6/library/modules/$.has", "npm:core-js@1.2.6/library/modules/$.wks"], true, function($__require, exports, module) {
+$__System.registerDynamic("f", ["d", "11", "10"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var def = $__require('npm:core-js@1.2.6/library/modules/$').setDesc,
-      has = $__require('npm:core-js@1.2.6/library/modules/$.has'),
-      TAG = $__require('npm:core-js@1.2.6/library/modules/$.wks')('toStringTag');
+  var def = $__require('d').setDesc,
+      has = $__require('11'),
+      TAG = $__require('10')('toStringTag');
   module.exports = function(it, tag, stat) {
     if (it && !has(it = stat ? it : it.prototype, TAG))
       def(it, TAG, {
@@ -793,7 +801,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.set-to-string-tag", 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$", [], true, function($__require, exports, module) {
+$__System.registerDynamic("d", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -815,22 +823,22 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$", [], true, function
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-define", ["npm:core-js@1.2.6/library/modules/$.library", "npm:core-js@1.2.6/library/modules/$.export", "npm:core-js@1.2.6/library/modules/$.redefine", "npm:core-js@1.2.6/library/modules/$.hide", "npm:core-js@1.2.6/library/modules/$.has", "npm:core-js@1.2.6/library/modules/$.iterators", "npm:core-js@1.2.6/library/modules/$.iter-create", "npm:core-js@1.2.6/library/modules/$.set-to-string-tag", "npm:core-js@1.2.6/library/modules/$", "npm:core-js@1.2.6/library/modules/$.wks"], true, function($__require, exports, module) {
+$__System.registerDynamic("12", ["7", "13", "8", "9", "11", "14", "e", "f", "d", "10"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var LIBRARY = $__require('npm:core-js@1.2.6/library/modules/$.library'),
-      $export = $__require('npm:core-js@1.2.6/library/modules/$.export'),
-      redefine = $__require('npm:core-js@1.2.6/library/modules/$.redefine'),
-      hide = $__require('npm:core-js@1.2.6/library/modules/$.hide'),
-      has = $__require('npm:core-js@1.2.6/library/modules/$.has'),
-      Iterators = $__require('npm:core-js@1.2.6/library/modules/$.iterators'),
-      $iterCreate = $__require('npm:core-js@1.2.6/library/modules/$.iter-create'),
-      setToStringTag = $__require('npm:core-js@1.2.6/library/modules/$.set-to-string-tag'),
-      getProto = $__require('npm:core-js@1.2.6/library/modules/$').getProto,
-      ITERATOR = $__require('npm:core-js@1.2.6/library/modules/$.wks')('iterator'),
+  var LIBRARY = $__require('7'),
+      $export = $__require('13'),
+      redefine = $__require('8'),
+      hide = $__require('9'),
+      has = $__require('11'),
+      Iterators = $__require('14'),
+      $iterCreate = $__require('e'),
+      setToStringTag = $__require('f'),
+      getProto = $__require('d').getProto,
+      ITERATOR = $__require('10')('iterator'),
       BUGGY = !([].keys && 'next' in [].keys()),
       FF_ITERATOR = '@@iterator',
       KEYS = 'keys',
@@ -902,14 +910,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-define", ["npm:
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.string.iterator", ["npm:core-js@1.2.6/library/modules/$.string-at", "npm:core-js@1.2.6/library/modules/$.iter-define"], true, function($__require, exports, module) {
+$__System.registerDynamic("15", ["4", "12"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var $at = $__require('npm:core-js@1.2.6/library/modules/$.string-at')(true);
-  $__require('npm:core-js@1.2.6/library/modules/$.iter-define')(String, 'String', function(iterated) {
+  var $at = $__require('4')(true);
+  $__require('12')(String, 'String', function(iterated) {
     this._t = String(iterated);
     this._i = 0;
   }, function() {
@@ -932,7 +940,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.string.iterator", 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.a-function", [], true, function($__require, exports, module) {
+$__System.registerDynamic("16", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -946,12 +954,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.a-function", [], tru
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.ctx", ["npm:core-js@1.2.6/library/modules/$.a-function"], true, function($__require, exports, module) {
+$__System.registerDynamic("17", ["16"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var aFunction = $__require('npm:core-js@1.2.6/library/modules/$.a-function');
+  var aFunction = $__require('16');
   module.exports = function(fn, that, length) {
     aFunction(fn);
     if (that === undefined)
@@ -978,14 +986,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.ctx", ["npm:core-js@
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.export", ["npm:core-js@1.2.6/library/modules/$.global", "npm:core-js@1.2.6/library/modules/$.core", "npm:core-js@1.2.6/library/modules/$.ctx"], true, function($__require, exports, module) {
+$__System.registerDynamic("13", ["18", "19", "17"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var global = $__require('npm:core-js@1.2.6/library/modules/$.global'),
-      core = $__require('npm:core-js@1.2.6/library/modules/$.core'),
-      ctx = $__require('npm:core-js@1.2.6/library/modules/$.ctx'),
+  var global = $__require('18'),
+      core = $__require('19'),
+      ctx = $__require('17'),
       PROTOTYPE = 'prototype';
   var $export = function(type, name, source) {
     var IS_FORCED = type & $export.F,
@@ -1028,7 +1036,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.export", ["npm:core-
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.defined", [], true, function($__require, exports, module) {
+$__System.registerDynamic("6", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -1042,12 +1050,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.defined", [], true, 
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-object", ["npm:core-js@1.2.6/library/modules/$.defined"], true, function($__require, exports, module) {
+$__System.registerDynamic("1a", ["6"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var defined = $__require('npm:core-js@1.2.6/library/modules/$.defined');
+  var defined = $__require('6');
   module.exports = function(it) {
     return Object(defined(it));
   };
@@ -1055,7 +1063,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-object", ["npm:co
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-object", [], true, function($__require, exports, module) {
+$__System.registerDynamic("1b", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -1067,12 +1075,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-object", [], true
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.an-object", ["npm:core-js@1.2.6/library/modules/$.is-object"], true, function($__require, exports, module) {
+$__System.registerDynamic("1c", ["1b"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var isObject = $__require('npm:core-js@1.2.6/library/modules/$.is-object');
+  var isObject = $__require('1b');
   module.exports = function(it) {
     if (!isObject(it))
       throw TypeError(it + ' is not an object!');
@@ -1082,12 +1090,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.an-object", ["npm:co
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-call", ["npm:core-js@1.2.6/library/modules/$.an-object"], true, function($__require, exports, module) {
+$__System.registerDynamic("1d", ["1c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var anObject = $__require('npm:core-js@1.2.6/library/modules/$.an-object');
+  var anObject = $__require('1c');
   module.exports = function(iterator, fn, value, entries) {
     try {
       return entries ? fn(anObject(value)[0], value[1]) : fn(value);
@@ -1102,13 +1110,13 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-call", ["npm:co
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-array-iter", ["npm:core-js@1.2.6/library/modules/$.iterators", "npm:core-js@1.2.6/library/modules/$.wks"], true, function($__require, exports, module) {
+$__System.registerDynamic("1e", ["14", "10"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var Iterators = $__require('npm:core-js@1.2.6/library/modules/$.iterators'),
-      ITERATOR = $__require('npm:core-js@1.2.6/library/modules/$.wks')('iterator'),
+  var Iterators = $__require('14'),
+      ITERATOR = $__require('10')('iterator'),
       ArrayProto = Array.prototype;
   module.exports = function(it) {
     return it !== undefined && (Iterators.Array === it || ArrayProto[ITERATOR] === it);
@@ -1117,7 +1125,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.is-array-iter", ["np
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-integer", [], true, function($__require, exports, module) {
+$__System.registerDynamic("5", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -1131,12 +1139,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-integer", [], tru
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-length", ["npm:core-js@1.2.6/library/modules/$.to-integer"], true, function($__require, exports, module) {
+$__System.registerDynamic("1f", ["5"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var toInteger = $__require('npm:core-js@1.2.6/library/modules/$.to-integer'),
+  var toInteger = $__require('5'),
       min = Math.min;
   module.exports = function(it) {
     return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0;
@@ -1145,7 +1153,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.to-length", ["npm:co
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.cof", [], true, function($__require, exports, module) {
+$__System.registerDynamic("20", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -1158,13 +1166,13 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.cof", [], true, func
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.classof", ["npm:core-js@1.2.6/library/modules/$.cof", "npm:core-js@1.2.6/library/modules/$.wks"], true, function($__require, exports, module) {
+$__System.registerDynamic("21", ["20", "10"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var cof = $__require('npm:core-js@1.2.6/library/modules/$.cof'),
-      TAG = $__require('npm:core-js@1.2.6/library/modules/$.wks')('toStringTag'),
+  var cof = $__require('20'),
+      TAG = $__require('10')('toStringTag'),
       ARG = cof(function() {
         return arguments;
       }()) == 'Arguments';
@@ -1178,7 +1186,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.classof", ["npm:core
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iterators", [], true, function($__require, exports, module) {
+$__System.registerDynamic("14", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -1188,15 +1196,15 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iterators", [], true
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/core.get-iterator-method", ["npm:core-js@1.2.6/library/modules/$.classof", "npm:core-js@1.2.6/library/modules/$.wks", "npm:core-js@1.2.6/library/modules/$.iterators", "npm:core-js@1.2.6/library/modules/$.core"], true, function($__require, exports, module) {
+$__System.registerDynamic("22", ["21", "10", "14", "19"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var classof = $__require('npm:core-js@1.2.6/library/modules/$.classof'),
-      ITERATOR = $__require('npm:core-js@1.2.6/library/modules/$.wks')('iterator'),
-      Iterators = $__require('npm:core-js@1.2.6/library/modules/$.iterators');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.core').getIteratorMethod = function(it) {
+  var classof = $__require('21'),
+      ITERATOR = $__require('10')('iterator'),
+      Iterators = $__require('14');
+  module.exports = $__require('19').getIteratorMethod = function(it) {
     if (it != undefined)
       return it[ITERATOR] || it['@@iterator'] || Iterators[classof(it)];
   };
@@ -1204,12 +1212,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/core.get-iterator-meth
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.shared", ["npm:core-js@1.2.6/library/modules/$.global"], true, function($__require, exports, module) {
+$__System.registerDynamic("23", ["18"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var global = $__require('npm:core-js@1.2.6/library/modules/$.global'),
+  var global = $__require('18'),
       SHARED = '__core-js_shared__',
       store = global[SHARED] || (global[SHARED] = {});
   module.exports = function(key) {
@@ -1219,7 +1227,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.shared", ["npm:core-
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.uid", [], true, function($__require, exports, module) {
+$__System.registerDynamic("24", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -1233,7 +1241,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.uid", [], true, func
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.global", [], true, function($__require, exports, module) {
+$__System.registerDynamic("18", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -1245,14 +1253,14 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.global", [], true, f
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.wks", ["npm:core-js@1.2.6/library/modules/$.shared", "npm:core-js@1.2.6/library/modules/$.uid", "npm:core-js@1.2.6/library/modules/$.global"], true, function($__require, exports, module) {
+$__System.registerDynamic("10", ["23", "24", "18"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var store = $__require('npm:core-js@1.2.6/library/modules/$.shared')('wks'),
-      uid = $__require('npm:core-js@1.2.6/library/modules/$.uid'),
-      Symbol = $__require('npm:core-js@1.2.6/library/modules/$.global').Symbol;
+  var store = $__require('23')('wks'),
+      uid = $__require('24'),
+      Symbol = $__require('18').Symbol;
   module.exports = function(name) {
     return store[name] || (store[name] = Symbol && Symbol[name] || (Symbol || uid)('Symbol.' + name));
   };
@@ -1260,12 +1268,12 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.wks", ["npm:core-js@
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-detect", ["npm:core-js@1.2.6/library/modules/$.wks"], true, function($__require, exports, module) {
+$__System.registerDynamic("25", ["10"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var ITERATOR = $__require('npm:core-js@1.2.6/library/modules/$.wks')('iterator'),
+  var ITERATOR = $__require('10')('iterator'),
       SAFE_CLOSING = false;
   try {
     var riter = [7][ITERATOR]();
@@ -1297,20 +1305,20 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.iter-detect", ["npm:
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.array.from", ["npm:core-js@1.2.6/library/modules/$.ctx", "npm:core-js@1.2.6/library/modules/$.export", "npm:core-js@1.2.6/library/modules/$.to-object", "npm:core-js@1.2.6/library/modules/$.iter-call", "npm:core-js@1.2.6/library/modules/$.is-array-iter", "npm:core-js@1.2.6/library/modules/$.to-length", "npm:core-js@1.2.6/library/modules/core.get-iterator-method", "npm:core-js@1.2.6/library/modules/$.iter-detect"], true, function($__require, exports, module) {
+$__System.registerDynamic("26", ["17", "13", "1a", "1d", "1e", "1f", "22", "25"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var ctx = $__require('npm:core-js@1.2.6/library/modules/$.ctx'),
-      $export = $__require('npm:core-js@1.2.6/library/modules/$.export'),
-      toObject = $__require('npm:core-js@1.2.6/library/modules/$.to-object'),
-      call = $__require('npm:core-js@1.2.6/library/modules/$.iter-call'),
-      isArrayIter = $__require('npm:core-js@1.2.6/library/modules/$.is-array-iter'),
-      toLength = $__require('npm:core-js@1.2.6/library/modules/$.to-length'),
-      getIterFn = $__require('npm:core-js@1.2.6/library/modules/core.get-iterator-method');
-  $export($export.S + $export.F * !$__require('npm:core-js@1.2.6/library/modules/$.iter-detect')(function(iter) {
+  var ctx = $__require('17'),
+      $export = $__require('13'),
+      toObject = $__require('1a'),
+      call = $__require('1d'),
+      isArrayIter = $__require('1e'),
+      toLength = $__require('1f'),
+      getIterFn = $__require('22');
+  $export($export.S + $export.F * !$__require('25')(function(iter) {
     Array.from(iter);
   }), 'Array', {from: function from(arrayLike) {
       var O = toObject(arrayLike),
@@ -1344,7 +1352,7 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/es6.array.from", ["npm
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/modules/$.core", [], true, function($__require, exports, module) {
+$__System.registerDynamic("19", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -1356,38 +1364,38 @@ System.registerDynamic("npm:core-js@1.2.6/library/modules/$.core", [], true, fun
   return module.exports;
 });
 
-System.registerDynamic("npm:core-js@1.2.6/library/fn/array/from", ["npm:core-js@1.2.6/library/modules/es6.string.iterator", "npm:core-js@1.2.6/library/modules/es6.array.from", "npm:core-js@1.2.6/library/modules/$.core"], true, function($__require, exports, module) {
+$__System.registerDynamic("27", ["15", "26", "19"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  $__require('npm:core-js@1.2.6/library/modules/es6.string.iterator');
-  $__require('npm:core-js@1.2.6/library/modules/es6.array.from');
-  module.exports = $__require('npm:core-js@1.2.6/library/modules/$.core').Array.from;
+  $__require('15');
+  $__require('26');
+  module.exports = $__require('19').Array.from;
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.34/core-js/array/from", ["npm:core-js@1.2.6/library/fn/array/from"], true, function($__require, exports, module) {
+$__System.registerDynamic("28", ["27"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
   module.exports = {
-    "default": $__require('npm:core-js@1.2.6/library/fn/array/from'),
+    "default": $__require('27'),
     __esModule: true
   };
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.34/helpers/to-consumable-array", ["npm:babel-runtime@5.8.34/core-js/array/from"], true, function($__require, exports, module) {
+$__System.registerDynamic("29", ["28"], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  var _Array$from = $__require('npm:babel-runtime@5.8.34/core-js/array/from')["default"];
+  var _Array$from = $__require('28')["default"];
   exports["default"] = function(arr) {
     if (Array.isArray(arr)) {
       for (var i = 0,
@@ -1403,7 +1411,7 @@ System.registerDynamic("npm:babel-runtime@5.8.34/helpers/to-consumable-array", [
   return module.exports;
 });
 
-System.registerDynamic("npm:babel-runtime@5.8.34/helpers/bind", [], true, function($__require, exports, module) {
+$__System.registerDynamic("2a", [], true, function($__require, exports, module) {
   "use strict";
   ;
   var global = this,
@@ -1415,7 +1423,7 @@ System.registerDynamic("npm:babel-runtime@5.8.34/helpers/bind", [], true, functi
   return module.exports;
 });
 
-System.registerDynamic("npm:process@0.11.2/browser", [], true, function($__require, exports, module) {
+$__System.registerDynamic("2b", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -1507,37 +1515,37 @@ System.registerDynamic("npm:process@0.11.2/browser", [], true, function($__requi
   return module.exports;
 });
 
-System.registerDynamic("npm:process@0.11.2", ["npm:process@0.11.2/browser"], true, function($__require, exports, module) {
+$__System.registerDynamic("2c", ["2b"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('npm:process@0.11.2/browser');
+  module.exports = $__require('2b');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("github:jspm/nodelibs-process@0.1.2/index", ["npm:process@0.11.2"], true, function($__require, exports, module) {
+$__System.registerDynamic("2d", ["2c"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = System._nodeRequire ? process : $__require('npm:process@0.11.2');
+  module.exports = $__System._nodeRequire ? process : $__require('2c');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("github:jspm/nodelibs-process@0.1.2", ["github:jspm/nodelibs-process@0.1.2/index"], true, function($__require, exports, module) {
+$__System.registerDynamic("2e", ["2d"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('github:jspm/nodelibs-process@0.1.2/index');
+  module.exports = $__require('2d');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:lodash@4.0.0/lodash", ["github:jspm/nodelibs-process@0.1.2"], true, function($__require, exports, module) {
+$__System.registerDynamic("2f", ["2e"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -6470,32 +6478,32 @@ System.registerDynamic("npm:lodash@4.0.0/lodash", ["github:jspm/nodelibs-process
         root._ = _;
       }
     }.call(this));
-  })($__require('github:jspm/nodelibs-process@0.1.2'));
+  })($__require('2e'));
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:lodash@4.0.0/index", ["npm:lodash@4.0.0/lodash"], true, function($__require, exports, module) {
+$__System.registerDynamic("30", ["2f"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('npm:lodash@4.0.0/lodash');
+  module.exports = $__require('2f');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:lodash@4.0.0", ["npm:lodash@4.0.0/index"], true, function($__require, exports, module) {
+$__System.registerDynamic("31", ["30"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('npm:lodash@4.0.0/index');
+  module.exports = $__require('30');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("npm:simplex-noise@2.2.0/simplex-noise", [], true, function($__require, exports, module) {
+$__System.registerDynamic("32", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -6848,17 +6856,17 @@ System.registerDynamic("npm:simplex-noise@2.2.0/simplex-noise", [], true, functi
   return module.exports;
 });
 
-System.registerDynamic("npm:simplex-noise@2.2.0", ["npm:simplex-noise@2.2.0/simplex-noise"], true, function($__require, exports, module) {
+$__System.registerDynamic("33", ["32"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('npm:simplex-noise@2.2.0/simplex-noise');
+  module.exports = $__require('32');
   global.define = __define;
   return module.exports;
 });
 
-System.registerDynamic("github:mrdoob/three.js@master/build/three", [], true, function($__require, exports, module) {
+$__System.registerDynamic("34", [], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
@@ -26429,17 +26437,17 @@ System.registerDynamic("github:mrdoob/three.js@master/build/three", [], true, fu
   return module.exports;
 });
 
-System.registerDynamic("github:mrdoob/three.js@master", ["github:mrdoob/three.js@master/build/three"], true, function($__require, exports, module) {
+$__System.registerDynamic("35", ["34"], true, function($__require, exports, module) {
   ;
   var global = this,
       __define = global.define;
   global.define = undefined;
-  module.exports = $__require('github:mrdoob/three.js@master/build/three');
+  module.exports = $__require('34');
   global.define = __define;
   return module.exports;
 });
 
-System.register("src/custom-lambert-material.js", ["github:mrdoob/three.js@master"], function (_export) {
+$__System.register("36", ["35"], function (_export) {
 			"use strict";
 
 			var THREE;
@@ -26462,115 +26470,115 @@ System.register("src/custom-lambert-material.js", ["github:mrdoob/three.js@maste
 			}
 
 			return {
-						setters: [function (_githubMrdoobThreeJsMaster) {
-									THREE = _githubMrdoobThreeJsMaster["default"];
+						setters: [function (_) {
+									THREE = _["default"];
 						}],
 						execute: function () {}
 			};
 });
 (function() {
-var _removeDefine = System.get("@@amd-helpers").createDefine();
-define("shaders/building-pars.vert!github:systemjs/plugin-text@0.0.4", [], function() {
+var _removeDefine = $__System.get("@@amd-helpers").createDefine();
+define("37", [], function() {
   return "varying vec3 vPosition;\r\nvarying vec3 vNormal;\r\nvarying vec2 vUv;";
 });
 
 _removeDefine();
 })();
 (function() {
-var _removeDefine = System.get("@@amd-helpers").createDefine();
-define("shaders/building-chunk.vert!github:systemjs/plugin-text@0.0.4", [], function() {
+var _removeDefine = $__System.get("@@amd-helpers").createDefine();
+define("38", [], function() {
   return "vPosition = position;\r\nvNormal = normal;\r\nvUv = uv;";
 });
 
 _removeDefine();
 })();
 (function() {
-var _removeDefine = System.get("@@amd-helpers").createDefine();
-define("shaders/building-pars.frag!github:systemjs/plugin-text@0.0.4", [], function() {
+var _removeDefine = $__System.get("@@amd-helpers").createDefine();
+define("39", [], function() {
   return "varying vec3 vPosition;\r\nvarying vec3 vNormal;\r\nvarying vec2 vUv;\r\nuniform vec3 dimensions;\r\nuniform vec3 uWallColor;\r\nuniform vec3 uRoofColor;\r\n\r\n//\r\n// Description : Array and textureless GLSL 2D simplex noise function.\r\n//      Author : Ian McEwan, Ashima Arts.\r\n//  Maintainer : ijm\r\n//     Lastmod : 20110822 (ijm)\r\n//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.\r\n//               Distributed under the MIT License. See LICENSE file.\r\n//               https://github.com/ashima/webgl-noise\r\n// \r\n\r\nvec3 mod289(vec3 x) {\r\n  return x - floor(x * (1.0 / 289.0)) * 289.0;\r\n}\r\n\r\nvec2 mod289(vec2 x) {\r\n  return x - floor(x * (1.0 / 289.0)) * 289.0;\r\n}\r\n\r\nvec3 permute(vec3 x) {\r\n  return mod289(((x*34.0)+1.0)*x);\r\n}\r\n\r\nfloat snoise(vec2 v)\r\n  {\r\n  const vec4 C = vec4(0.211324865405187,  // (3.0-sqrt(3.0))/6.0\r\n                      0.366025403784439,  // 0.5*(sqrt(3.0)-1.0)\r\n                     -0.577350269189626,  // -1.0 + 2.0 * C.x\r\n                      0.024390243902439); // 1.0 / 41.0\r\n// First corner\r\n  vec2 i  = floor(v + dot(v, C.yy) );\r\n  vec2 x0 = v -   i + dot(i, C.xx);\r\n\r\n// Other corners\r\n  vec2 i1;\r\n  //i1.x = step( x0.y, x0.x ); // x0.x > x0.y ? 1.0 : 0.0\r\n  //i1.y = 1.0 - i1.x;\r\n  i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);\r\n  // x0 = x0 - 0.0 + 0.0 * C.xx ;\r\n  // x1 = x0 - i1 + 1.0 * C.xx ;\r\n  // x2 = x0 - 1.0 + 2.0 * C.xx ;\r\n  vec4 x12 = x0.xyxy + C.xxzz;\r\n  x12.xy -= i1;\r\n\r\n// Permutations\r\n  i = mod289(i); // Avoid truncation effects in permutation\r\n  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))\r\n\t\t+ i.x + vec3(0.0, i1.x, 1.0 ));\r\n\r\n  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);\r\n  m = m*m ;\r\n  m = m*m ;\r\n\r\n// Gradients: 41 points uniformly over a line, mapped onto a diamond.\r\n// The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)\r\n\r\n  vec3 x = 2.0 * fract(p * C.www) - 1.0;\r\n  vec3 h = abs(x) - 0.5;\r\n  vec3 ox = floor(x + 0.5);\r\n  vec3 a0 = x - ox;\r\n\r\n// Normalise gradients implicitly by scaling m\r\n// Approximation of: m *= inversesqrt( a0*a0 + h*h );\r\n  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );\r\n\r\n// Compute final noise value at P\r\n  vec3 g;\r\n  g.x  = a0.x  * x0.x  + h.x  * x0.y;\r\n  g.yz = a0.yz * x12.xz + h.yz * x12.yw;\r\n  return 130.0 * dot(m, g);\r\n}";
 });
 
 _removeDefine();
 })();
 (function() {
-var _removeDefine = System.get("@@amd-helpers").createDefine();
-define("shaders/building-chunk.frag!github:systemjs/plugin-text@0.0.4", [], function() {
+var _removeDefine = $__System.get("@@amd-helpers").createDefine();
+define("3a", [], function() {
   return "vec3 absNormal = abs(vNormal);\r\nfloat windowHeight = 0.1;\r\nfloat windowWidth = 0.09;\r\nvec3 glassColor = vec3(0.1);\r\nvec3 windowEdgeColor = vec3(0.9);\r\nvec3 wallColor = vec3(uWallColor);\r\nvec3 roofColor = vec3(uRoofColor);\r\nvec3 position = vec3(vPosition);\r\n\r\nwallColor += wallColor * snoise(vUv/3.0);\r\nfloat xCoord = (absNormal.x > 0.5) ? position.y + dimensions.y / 2.0 : position.x + dimensions.x / 2.0;\r\nposition.z += dimensions.z / 2.0;\r\nfloat isWindow = mod(floor(position.z / windowHeight), 2.0);\r\nfloat windowCoord = fract(xCoord / windowWidth);\r\nfloat isWindowEdge = (windowCoord < 0.3) ? 1.0 : 0.0;\r\nvec3 windowColor = mix(glassColor, windowEdgeColor, isWindowEdge);\r\nfloat isRoof = (absNormal.z > 0.5) ? 1.0 : 0.0;\r\n\r\nvec3 color = mix(windowColor, wallColor, isWindow);\r\ncolor = mix(color, roofColor, isRoof);\r\ndiffuseColor = vec4(color, opacity);";
 });
 
 _removeDefine();
 })();
 (function() {
-var _removeDefine = System.get("@@amd-helpers").createDefine();
-define("shaders/street-pars.vert!github:systemjs/plugin-text@0.0.4", [], function() {
+var _removeDefine = $__System.get("@@amd-helpers").createDefine();
+define("3b", [], function() {
   return "attribute vec2 afaceCoordinates;\r\nattribute vec2 afaceDimensions;\r\n\r\nvarying vec2 vfaceCoordinates;\r\nvarying vec2 vfaceDimensions;";
 });
 
 _removeDefine();
 })();
 (function() {
-var _removeDefine = System.get("@@amd-helpers").createDefine();
-define("shaders/street-chunk.vert!github:systemjs/plugin-text@0.0.4", [], function() {
+var _removeDefine = $__System.get("@@amd-helpers").createDefine();
+define("3c", [], function() {
   return "vfaceCoordinates = afaceCoordinates;\r\nvfaceDimensions = afaceDimensions;";
 });
 
 _removeDefine();
 })();
 (function() {
-var _removeDefine = System.get("@@amd-helpers").createDefine();
-define("shaders/street-pars.frag!github:systemjs/plugin-text@0.0.4", [], function() {
+var _removeDefine = $__System.get("@@amd-helpers").createDefine();
+define("3d", [], function() {
   return "uniform vec4 groundcolor;\r\nuniform vec4 streetcolor;\r\nuniform float streetWidth;\r\n\r\nvarying vec2 vfaceCoordinates;\r\nvarying vec2 vfaceDimensions;\r\n\r\nfloat when_gt(float x, float y) {\r\n\treturn max(sign(x - y), 0.0);\r\n}\r\n\r\nfloat when_lt(float x, float y) {\r\n\treturn max(sign(y - x), 0.0);\r\n}";
 });
 
 _removeDefine();
 })();
 (function() {
-var _removeDefine = System.get("@@amd-helpers").createDefine();
-define("shaders/street-chunk.frag!github:systemjs/plugin-text@0.0.4", [], function() {
+var _removeDefine = $__System.get("@@amd-helpers").createDefine();
+define("3e", [], function() {
   return "vec4 white = vec4(1.0, 1.0, 1.0, 1.0);\r\nvec4 pavementColor = vec4(0.6, 0.6, 0.6, 1);\r\nfloat pavementWidth = streetWidth / 8.0;\r\nfloat lineLength = streetWidth/2.0;\r\nfloat lineWidth = streetWidth/10.0;\r\nvec4 color = pavementColor;\r\n\r\nfloat x = vfaceCoordinates.x;\r\nfloat y = vfaceCoordinates.y;\r\nfloat absx = abs(vfaceCoordinates.x);\r\nfloat absy = abs(vfaceCoordinates.y);\r\n\r\n//so that line width appears more to the center\r\n//color = (absx < (streetWidth + lineWidth*when_lt(x, 0.0))/2.0) ? streetcolor : color;\r\n//color = (absy < (streetWidth + lineWidth*when_lt(y, 0.0))/2.0) ? streetcolor : color;\r\ncolor = (absy < (streetWidth / 2.0) - pavementWidth) ? streetcolor : color;\r\ncolor = (absx < (streetWidth / 2.0) - pavementWidth) ? streetcolor : color;\r\ncolor = (absx > vfaceDimensions.x - (streetWidth / 2.0) + pavementWidth) ? streetcolor : color;\r\ncolor = (absy > vfaceDimensions.y - (streetWidth / 2.0) + pavementWidth) ? streetcolor : color;\r\n\r\nfloat linePaddingX = mod(vfaceDimensions.x, lineLength * 2.0)/2.0;\r\nfloat linePaddingY = mod(vfaceDimensions.y, lineLength * 2.0)/2.0;\r\ncolor = (absx < lineWidth && mod(floor((absy + linePaddingY)/lineLength), 2.0)>0.5 && y>0.0) ? white : color;\r\ncolor = (absy < lineWidth && mod(floor((absx + linePaddingX)/lineLength), 2.0)>0.5 && x>0.0) ? white : color;\r\n\r\n\r\ndiffuseColor = color;";
 });
 
 _removeDefine();
 })();
-System.register('src/city-generator.js', ['npm:babel-runtime@5.8.34/helpers/to-consumable-array', 'npm:babel-runtime@5.8.34/helpers/bind', 'github:mrdoob/three.js@master', 'npm:lodash@4.0.0', 'npm:simplex-noise@2.2.0', 'src/custom-lambert-material.js', 'shaders/building-pars.vert!github:systemjs/plugin-text@0.0.4', 'shaders/building-chunk.vert!github:systemjs/plugin-text@0.0.4', 'shaders/building-pars.frag!github:systemjs/plugin-text@0.0.4', 'shaders/building-chunk.frag!github:systemjs/plugin-text@0.0.4', 'shaders/street-pars.vert!github:systemjs/plugin-text@0.0.4', 'shaders/street-chunk.vert!github:systemjs/plugin-text@0.0.4', 'shaders/street-pars.frag!github:systemjs/plugin-text@0.0.4', 'shaders/street-chunk.frag!github:systemjs/plugin-text@0.0.4'], function (_export) {
-	var _toConsumableArray, _bind, THREE, _, SimplexNoise, CustomLambertMaterial, buildingVertParams, buildingVertShader, buildingFragParams, buildingFragShader, streetVertParams, streetVertShader, streetFragParams, streetFragShader;
+$__System.register('3f', ['29', '31', '33', '35', '36', '37', '38', '39', '2a', '3a', '3b', '3c', '3d', '3e'], function (_export) {
+	var _toConsumableArray, _, SimplexNoise, THREE, CustomLambertMaterial, buildingVertParams, buildingVertShader, buildingFragParams, _bind, buildingFragShader, streetVertParams, streetVertShader, streetFragParams, streetFragShader;
 
 	return {
-		setters: [function (_npmBabelRuntime5834HelpersToConsumableArray) {
-			_toConsumableArray = _npmBabelRuntime5834HelpersToConsumableArray['default'];
-		}, function (_npmBabelRuntime5834HelpersBind) {
-			_bind = _npmBabelRuntime5834HelpersBind['default'];
-		}, function (_githubMrdoobThreeJsMaster) {
-			THREE = _githubMrdoobThreeJsMaster['default'];
-		}, function (_npmLodash400) {
-			_ = _npmLodash400['default'];
-		}, function (_npmSimplexNoise220) {
-			SimplexNoise = _npmSimplexNoise220['default'];
-		}, function (_srcCustomLambertMaterialJs) {
-			CustomLambertMaterial = _srcCustomLambertMaterialJs.CustomLambertMaterial;
-		}, function (_shadersBuildingParsVertGithubSystemjsPluginText004) {
-			buildingVertParams = _shadersBuildingParsVertGithubSystemjsPluginText004['default'];
-		}, function (_shadersBuildingChunkVertGithubSystemjsPluginText004) {
-			buildingVertShader = _shadersBuildingChunkVertGithubSystemjsPluginText004['default'];
-		}, function (_shadersBuildingParsFragGithubSystemjsPluginText004) {
-			buildingFragParams = _shadersBuildingParsFragGithubSystemjsPluginText004['default'];
-		}, function (_shadersBuildingChunkFragGithubSystemjsPluginText004) {
-			buildingFragShader = _shadersBuildingChunkFragGithubSystemjsPluginText004['default'];
-		}, function (_shadersStreetParsVertGithubSystemjsPluginText004) {
-			streetVertParams = _shadersStreetParsVertGithubSystemjsPluginText004['default'];
-		}, function (_shadersStreetChunkVertGithubSystemjsPluginText004) {
-			streetVertShader = _shadersStreetChunkVertGithubSystemjsPluginText004['default'];
-		}, function (_shadersStreetParsFragGithubSystemjsPluginText004) {
-			streetFragParams = _shadersStreetParsFragGithubSystemjsPluginText004['default'];
-		}, function (_shadersStreetChunkFragGithubSystemjsPluginText004) {
-			streetFragShader = _shadersStreetChunkFragGithubSystemjsPluginText004['default'];
+		setters: [function (_2) {
+			_toConsumableArray = _2['default'];
+		}, function (_4) {
+			_ = _4['default'];
+		}, function (_5) {
+			SimplexNoise = _5['default'];
+		}, function (_3) {
+			THREE = _3['default'];
+		}, function (_6) {
+			CustomLambertMaterial = _6.CustomLambertMaterial;
+		}, function (_7) {
+			buildingVertParams = _7['default'];
+		}, function (_8) {
+			buildingVertShader = _8['default'];
+		}, function (_9) {
+			buildingFragParams = _9['default'];
+		}, function (_a) {
+			_bind = _a['default'];
+		}, function (_a2) {
+			buildingFragShader = _a2['default'];
+		}, function (_b) {
+			streetVertParams = _b['default'];
+		}, function (_c) {
+			streetVertShader = _c['default'];
+		}, function (_d) {
+			streetFragParams = _d['default'];
+		}, function (_e) {
+			streetFragShader = _e['default'];
 		}],
 		execute: function () {
 
 			//import street shaders
+			'use strict';
 
 			//import building shaders
-			'use strict';
 
 			_export('default', function () {
 				// constants
@@ -26747,17 +26755,17 @@ System.register('src/city-generator.js', ['npm:babel-runtime@5.8.34/helpers/to-c
 		}
 	};
 });
-System.register('src/main.js', ['github:mrdoob/three.js@master', 'npm:three-orbit-controls@72.0.0', 'src/city-generator.js'], function (_export) {
+$__System.register('1', ['3', '35', '3f'], function (_export) {
 	'use strict';
 
-	var THREE, OrbitControls, CityGenerator, scene, camera, renderer, cityGenerator, city, Controls, controls, light, directionalLight, render;
+	var OrbitControls, THREE, CityGenerator, scene, camera, renderer, cityGenerator, city, Controls, controls, light, directionalLight, render;
 	return {
-		setters: [function (_githubMrdoobThreeJsMaster) {
-			THREE = _githubMrdoobThreeJsMaster['default'];
-		}, function (_npmThreeOrbitControls7200) {
-			OrbitControls = _npmThreeOrbitControls7200['default'];
-		}, function (_srcCityGeneratorJs) {
-			CityGenerator = _srcCityGeneratorJs['default'];
+		setters: [function (_2) {
+			OrbitControls = _2['default'];
+		}, function (_) {
+			THREE = _['default'];
+		}, function (_f) {
+			CityGenerator = _f['default'];
 		}],
 		execute: function () {
 			scene = new THREE.Scene();
@@ -26804,5 +26812,9 @@ System.register('src/main.js', ['github:mrdoob/three.js@master', 'npm:three-orbi
 			render();
 		}
 	};
+});
+})
+(function(factory) {
+  factory();
 });
 //# sourceMappingURL=bundle.js.map
