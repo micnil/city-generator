@@ -10,7 +10,7 @@ renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
 
 var cityGenerator = CityGenerator();
-var city = cityGenerator.generate(15, 15);
+var city = cityGenerator.generate(8, 8);
 scene.add( city );
 city.rotation.x -= Math.PI / 4;
 var Controls = OrbitControls(THREE);

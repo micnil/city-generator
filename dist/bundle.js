@@ -26778,7 +26778,7 @@ $__System.register('1', ['3', '35', '3f'], function (_export) {
 			document.body.appendChild(renderer.domElement);
 
 			cityGenerator = CityGenerator();
-			city = cityGenerator.generate(15, 15);
+			city = cityGenerator.generate(8, 8);
 
 			scene.add(city);
 			city.rotation.x -= Math.PI / 4;
