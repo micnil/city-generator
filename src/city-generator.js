@@ -38,10 +38,7 @@ export default () => {
 			]
 		];
 
-		while(numBlocks !== quadBlocks.length) {
-			numBlocks = quadBlocks.length;
-			quadBlocks = splitBlocks(quadBlocks);
-		}
+		quadBlocks = splitBlocks(quadBlocks[0]);
 
 		let triangulatedBlocks = triangulate(quadBlocks);
 		let faceCoordinates = surfaceCoordinates(triangulatedBlocks);
@@ -77,67 +74,65 @@ export default () => {
 		return city;
 	};
 
-	function splitBlocks(blocks) {
-		return _.flatMap(blocks, (block) => {
+	function splitBlocks(block) {
 
-			//get distances to adjecent vertices
-			var blockDim = dimensions(block);
-			var longSide = Math.max(...blockDim);
-			var shortSide = Math.min(...blockDim);
+		//get distances to adjecent vertices
+		var blockDim = dimensions(block);
+		var longSide = Math.max(...blockDim);
+		var shortSide = Math.min(...blockDim);
 
-			var paddingRule1 = MIN_AREA / shortSide;
-			var paddingRule2 = shortSide * MIN_SIDE_RATIO;
-			var cutPadding = Math.max(paddingRule1, paddingRule2);
-			if(cutPadding*2 > longSide){
-				return [block];
-			}
+		var paddingRule1 = MIN_AREA / shortSide;
+		var paddingRule2 = shortSide * MIN_SIDE_RATIO;
+		var cutPadding = Math.max(paddingRule1, paddingRule2);
+		if(cutPadding*2 > longSide){
+			return [block];
+		}
 
-			var cutInterval = longSide - cutPadding * 2;
-			var cutOffset = Math.random() * cutInterval + cutPadding;
-			var cutPoint1;
-			var cutPoint2;
-			var newBlock1;
-			var newBlock2;
+		var cutInterval = longSide - cutPadding * 2;
+		var cutOffset = Math.random() * cutInterval + cutPadding;
+		var cutPoint1;
+		var cutPoint2;
+		var newBlock1;
+		var newBlock2;
 
-			//lerp cutting points
-			if(blockDim[0] > blockDim[1]){
-				cutPoint1 = lerp(block[0], block[1], cutOffset / blockDim[0]);
-				cutPoint2 = lerp(block[3], block[2], cutOffset / blockDim[0]);
+		//lerp cutting points
+		if(blockDim[0] > blockDim[1]){
+			cutPoint1 = lerp(block[0], block[1], cutOffset / blockDim[0]);
+			cutPoint2 = lerp(block[3], block[2], cutOffset / blockDim[0]);
 
-				newBlock1 = [
-					block[0].slice(),
-					cutPoint1.slice(),
-					cutPoint2.slice(),
-					block[3].slice()
-				];
+			newBlock1 = [
+				block[0].slice(),
+				cutPoint1.slice(),
+				cutPoint2.slice(),
+				block[3].slice()
+			];
 
-				newBlock2 = [
-					cutPoint1.slice(),
-					block[1].slice(),
-					block[2].slice(),
-					cutPoint2.slice()
-				];
-			} else {
-				cutPoint1 = lerp(block[0], block[3], cutOffset / blockDim[1]);
-				cutPoint2 = lerp(block[1], block[2], cutOffset / blockDim[1]);
+			newBlock2 = [
+				cutPoint1.slice(),
+				block[1].slice(),
+				block[2].slice(),
+				cutPoint2.slice()
+			];
+		} else {
+			cutPoint1 = lerp(block[0], block[3], cutOffset / blockDim[1]);
+			cutPoint2 = lerp(block[1], block[2], cutOffset / blockDim[1]);
 
-				newBlock1 = [
-					block[0].slice(),
-					block[1].slice(),
-					cutPoint2.slice(),
-					cutPoint1.slice()
-				];
+			newBlock1 = [
+				block[0].slice(),
+				block[1].slice(),
+				cutPoint2.slice(),
+				cutPoint1.slice()
+			];
 
-				newBlock2 = [
-					cutPoint1.slice(),
-					cutPoint2.slice(),
-					block[2].slice(),
-					block[3].slice()
-				];
-			}
+			newBlock2 = [
+				cutPoint1.slice(),
+				cutPoint2.slice(),
+				block[2].slice(),
+				block[3].slice()
+			];
+		}
 
-			return [newBlock1, newBlock2];
-		});
+		return _.flatten([splitBlocks(newBlock1), splitBlocks(newBlock2)]);
 	};
 
 	function lerp(p1, p2, t){
@@ -209,10 +204,11 @@ export default () => {
 			let center = centerOf(block);
 			dim[0] -= streetWidth;
 			dim[1] -= streetWidth;
-			let height = 0.3;
+
+/*			let height = 0.3;
 			height += Math.abs(simplex.noise2D(center[0]/xSize, center[1]/ySize)) * 0.6;
 			height += simplex.noise2D(center[0], center[1]) * 0.3;
-			height += simplex.noise2D(center[0]*2, center[1]*2) * 0.1;
+			height += simplex.noise2D(center[0]*2, center[1]*2) * 0.1;*/
 
 			let wallNoise = simplex.noise2D(center[0], center[1])/10;
 			let wallColor = new THREE.Vector3(
@@ -221,10 +217,9 @@ export default () => {
 				Math.random() * 0.3 + 0.35
 			);
 			let roofColor = Math.random() * 0.4 + 0.2;
-			let geometry = new THREE.BoxGeometry( ...dim, height );
+			let geometry = new THREE.BoxGeometry( ...dim, 1.0 );
 			let material = CustomLambertMaterial( {
 				uniforms: {
-					dimensions: { type: "v3", value: new THREE.Vector3(dim[0], dim[1], height)},
 					uWallColor: { type: "v3", value: wallColor},
 					uRoofColor: { type: "v3", value: new THREE.Vector3(roofColor, roofColor, roofColor)}
 				},
@@ -233,12 +228,24 @@ export default () => {
 				vertChunk: buildingVertShader,
 				fragChunk: buildingFragShader
 			} );
-			let building = new THREE.Mesh( geometry, material );
 
+			let building = new THREE.Mesh( geometry, material );
 			building.position.set(center[0], center[1], height/2 + center[2]);
+
+			setHeightNoise(building, 1.0, 0.6);
 			return building;
 		});
 	};
+
+	function setHeightNoise(building, frequency, amplitude){
+		let height = 0.3;
+		let x = building.position.x/xSize;
+		let y = building.position.y/ySize;
+		height += Math.abs(simplex.noise2D(x * frequency, y * frequency)) * amplitude;
+		height += simplex.noise2D(x, y) * 0.3;
+		height += simplex.noise2D(x*2, y*2) * 0.1;
+		building.scale.z = height;
+	}
 
 	return {
 		generate
