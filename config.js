@@ -17,6 +17,7 @@ System.config({
     "babel": "npm:babel-core@5.8.34",
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "core-js": "npm:core-js@1.2.6",
+    "datgui": "github:dataarts/dat.gui@0.5.1",
     "lodash": "npm:lodash@4.0.0",
     "simplex-noise": "npm:simplex-noise@2.2.0",
     "text": "github:systemjs/plugin-text@0.0.4",

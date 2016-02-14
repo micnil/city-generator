@@ -42,7 +42,6 @@ export function CustomLambertMaterial(options){
 			options.vertParams,
 
 			"void main() {",
-				options.vertChunk,
 				THREE.ShaderChunk[ "uv_vertex" ],
 				THREE.ShaderChunk[ "uv2_vertex" ],
 				THREE.ShaderChunk[ "color_vertex" ],
@@ -60,6 +59,7 @@ export function CustomLambertMaterial(options){
 				THREE.ShaderChunk[ "logdepthbuf_vertex" ],
 
 				THREE.ShaderChunk[ "worldpos_vertex" ],
+				options.vertChunk,
 				THREE.ShaderChunk[ "envmap_vertex" ],
 				THREE.ShaderChunk[ "lights_lambert_vertex" ],
 				THREE.ShaderChunk[ "shadowmap_vertex" ],

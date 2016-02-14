@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>City Generator</title>
+<<<<<<< HEAD
+=======
+    <script src="jspm_packages/system.js"></script>
+    <script src="config.js"></script>
+    <!-- <script src="dist/bundle.js"></script> -->
+>>>>>>> master
+	<style>
+		body{
+			margin: 0px;
+			overflow: hidden;
+		}
+	</style>
+</head>
+<body>
+<script src="dist/bundle.js"></script>
+</body>
+</html>

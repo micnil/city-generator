@@ -1,6 +1,5 @@
 vec4 white = vec4(1.0, 1.0, 1.0, 1.0);
 vec4 pavementColor = vec4(0.6, 0.6, 0.6, 1);
-float pavementWidth = streetWidth / 8.0;
 float lineLength = streetWidth/2.0;
 float lineWidth = streetWidth/10.0;
 vec4 color = pavementColor;
