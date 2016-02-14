@@ -9,8 +9,10 @@ var params = {
 	width: 6,
 	length: 6,
 	minArea: 0.16,
-	minRatio: 0.3,
-	streetWidth: 0.15
+	thickness: 0.3,
+	streetWidth: 0.15,
+	pavementWidth: 0.025,
+	windowHeight: 0.1,
 }
 
 var scene = new THREE.Scene();
@@ -54,6 +56,14 @@ function streetWidthChanged(value) {
 	cityGenerator.setStreetWidth(city, value);
 	render();
 }
+function pavementWidthChanged(value) {
+	cityGenerator.setPavementWidth(city, value);
+	render();
+}
+function windowHeightChanged(value) {
+	cityGenerator.setWindowHeight(city, value);
+	render();
+}
 function recreate(){
 	let transform = city.matrix;
 	scene.remove(city);
@@ -63,21 +73,21 @@ function recreate(){
 	render();
 }
 
-gui.add(params, 'amplitude', 0, 1).onChange(heightNoiseChanged);
+gui.add(params, 'amplitude', 0, 1.5).onChange(heightNoiseChanged);
 gui.add(params, 'frequency', 0, 10).onChange(heightNoiseChanged);
 gui.add(params, 'width').onChange(_.throttle(recreate, 1/10));
 gui.add(params, 'length').onChange(_.throttle(recreate, 1/10));
 gui.add(params, 'minArea', 0, 1).onChange(_.throttle(recreate, 1/10));
-gui.add(params, 'minRatio', 0, 0.5).onChange(_.throttle(recreate, 1/10));
+gui.add(params, 'thickness', 0, 1).onChange(_.throttle(recreate, 1/10));
 gui.add(params, 'streetWidth', 0, 0.5).onChange(_.throttle(streetWidthChanged, 1/10));
+gui.add(params, 'pavementWidth', 0, 0.1).onChange(_.throttle(pavementWidthChanged, 1/10));
+gui.add(params, 'windowHeight', 0, 0.5).onChange(_.throttle(windowHeightChanged, 1/10));
 
 camera.position.z = 4;
 
 function render() {
-	//requestAnimationFrame( render );
 	controls.update();
 	renderer.render(scene, camera);
-	//console.log(menu.hej)
 };
 
 render();

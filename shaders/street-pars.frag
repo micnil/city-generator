@@ -1,6 +1,7 @@
 uniform vec4 groundcolor;
 uniform vec4 streetcolor;
 uniform float streetWidth;
+uniform float pavementWidth;
 
 varying vec2 vfaceCoordinates;
 varying vec2 vfaceDimensions;

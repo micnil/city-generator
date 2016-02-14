@@ -1,5 +1,5 @@
 vec3 absNormal = abs(vNormal);
-float windowHeight = 0.1;
+//float windowHeight = 0.1;
 float windowWidth = 0.09;
 vec3 glassColor = vec3(0.1);
 vec3 windowEdgeColor = vec3(0.9);

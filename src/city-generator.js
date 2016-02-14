@@ -22,6 +22,10 @@ export default () => {
 	var xSize;
 	var ySize;
 	var streetWidth = 0.15;
+	var windowHeight = 0.1;
+	var pavementWidth = 0.05;
+	var buildingFrequency;
+	var buildingHeight;
 	var simplex = new SimplexNoise(Math.random);
 
 	function generate(params) {
@@ -30,8 +34,12 @@ export default () => {
 		xSize = params.width || 6.0;
 		ySize = params.length || 6.0;
 		MIN_AREA = params.minArea || 0.16;
-		MIN_SIDE_RATIO = params.minRatio || 0.3;
-		streetWidth = params.streetWidth || 0.15;
+		MIN_SIDE_RATIO = params.thickness || 0.3;
+		streetWidth = (isNaN(params.streetWidth)) ? 0.15 : params.streetWidth;
+		pavementWidth = (isNaN(params.pavementWidth)) ? 0.05 : params.pavementWidth;
+		windowHeight = (isNaN(params.windowHeight)) ? 0.1 : params.windowHeight;
+		buildingHeight = (isNaN(params.amplitude)) ? 0.6 : params.amplitude;
+		buildingFrequency = (isNaN(params.frequency)) ? 1 : params.frequency;
 
 		var quadBlocks = [
 			[
@@ -64,7 +72,8 @@ export default () => {
 			uniforms: {
 				groundcolor: { type: "v4", value: new THREE.Vector4(0.96, 0.64, 0.38, 1.0) },
 				streetcolor: { type: "v4", value: new THREE.Vector4(0.30, 0.30, 0.30, 1.0) },
-				streetWidth: { type: "f", value: streetWidth}
+				streetWidth: { type: "f", value: streetWidth},
+				pavementWidth: { type: "f", value: pavementWidth}
 			},
 			vertParams: streetVertParams,
 			fragParams: streetFragParams,
@@ -84,15 +93,14 @@ export default () => {
 		var blockDim = dimensions(block);
 		var longSide = Math.max(...blockDim);
 		var shortSide = Math.min(...blockDim);
-
-		var paddingRule1 = MIN_AREA / shortSide;
-		var paddingRule2 = shortSide * MIN_SIDE_RATIO;
-/*		if(paddingRule2 * shortSide > 2*MIN_AREA ){
-			paddingRule2 = 2*MIN_AREA / shortSide;
-			paddingRule2 = 
-		}
-*/
+		var paddingRule1 = (2*MIN_AREA) / shortSide;
+		var paddingRule2 = (shortSide/2) * MIN_SIDE_RATIO;
 		var cutPadding = Math.max(paddingRule1, paddingRule2);
+		if(cutPadding*2 > longSide){
+			paddingRule1 = MIN_AREA / shortSide;
+			paddingRule2 = shortSide * MIN_SIDE_RATIO;
+			cutPadding = Math.max(paddingRule1, paddingRule2);
+		}
 
 		if(cutPadding*2 > longSide){
 			return [block];
@@ -226,7 +234,8 @@ export default () => {
 			let material = CustomLambertMaterial( {
 				uniforms: {
 					uWallColor: { type: "v3", value: wallColor},
-					uRoofColor: { type: "v3", value: new THREE.Vector3(roofColor, roofColor, roofColor)}
+					uRoofColor: { type: "v3", value: new THREE.Vector3(roofColor, roofColor, roofColor)},
+					windowHeight: { type: "f", value: windowHeight}
 				},
 				vertParams: buildingVertParams,
 				fragParams: buildingFragParams,
@@ -239,7 +248,7 @@ export default () => {
 			building.scale.y = dim[1];
 			building.position.set(center[0], center[1], 1.0/2 + center[2]);
 
-			setHeightNoise(building, 1.0, 0.6);
+			setHeightNoise(building, buildingFrequency, buildingHeight);
 			return building;
 		});
 	};
@@ -256,7 +265,6 @@ export default () => {
 	}
 	function setStreetWidth(city, width){
 		city.material.uniforms.streetWidth.value = width;
-		console.log(city.material.uniforms)
 		city.material.needsUpdate = true;
 		let buildings = city.children;
 		buildings.forEach((building)=>{
@@ -265,9 +273,24 @@ export default () => {
 		});
 		streetWidth = width;
 	}
+	function setPavementWidth(city, width){
+		city.material.uniforms.pavementWidth.value = width;
+		city.material.needsUpdate = true;
+		pavementWidth = width;
+	}
+	function setWindowHeight(city, height){
+		let buildings = city.children;
+		buildings.forEach((building)=>{
+			building.material.uniforms.windowHeight.value = height;
+			building.material.needsUpdate = true;
+		});
+		windowHeight = height;
+	}
 	return {
 		generate,
 		setHeightNoise,
-		setStreetWidth
+		setStreetWidth,
+		setPavementWidth,
+		setWindowHeight
 	}
 }
