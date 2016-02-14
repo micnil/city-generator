@@ -17,24 +17,28 @@ import streetFragShader from 'shaders/street-chunk.frag!text';
 
 export default () => {
 	// constants
-	const MIN_AREA = 0.16;
-	const MIN_SIDE_RATIO = 0.3;
+	var MIN_AREA = 0.16;
+	var MIN_SIDE_RATIO = 0.3;
 	var xSize;
 	var ySize;
 	var streetWidth = 0.15;
+	var simplex = new SimplexNoise(Math.random);
 
-	function generate(x, y) {
+	function generate(params) {
 		console.log("Generating city...");
 		let numBlocks = 0;
-		xSize = x;
-		ySize = y;
+		xSize = params.width || 6.0;
+		ySize = params.length || 6.0;
+		MIN_AREA = params.minArea || 0.16;
+		MIN_SIDE_RATIO = params.minRatio || 0.3;
+		streetWidth = params.streetWidth || 0.15;
 
 		var quadBlocks = [
 			[
-				[-x/2, -y/2.0, 0.0],
-				[x/2.0, -y/2.0, 0.0],
-				[x/2.0, y/2.0, 0.0],
-				[-x/2.0, y/2.0, 0.0]
+				[-xSize/2, -ySize/2.0, 0.0],
+				[xSize/2.0, -ySize/2.0, 0.0],
+				[xSize/2.0, ySize/2.0, 0.0],
+				[-xSize/2.0, ySize/2.0, 0.0]
 			]
 		];
 
@@ -83,7 +87,13 @@ export default () => {
 
 		var paddingRule1 = MIN_AREA / shortSide;
 		var paddingRule2 = shortSide * MIN_SIDE_RATIO;
+/*		if(paddingRule2 * shortSide > 2*MIN_AREA ){
+			paddingRule2 = 2*MIN_AREA / shortSide;
+			paddingRule2 = 
+		}
+*/
 		var cutPadding = Math.max(paddingRule1, paddingRule2);
+
 		if(cutPadding*2 > longSide){
 			return [block];
 		}
@@ -198,17 +208,11 @@ export default () => {
 	};
 
 	function createBuildings(quadBlocks){
-		var simplex = new SimplexNoise(Math.random);
 		return _.map(quadBlocks, (block) => {
 			let dim = dimensions(block);
 			let center = centerOf(block);
 			dim[0] -= streetWidth;
 			dim[1] -= streetWidth;
-
-/*			let height = 0.3;
-			height += Math.abs(simplex.noise2D(center[0]/xSize, center[1]/ySize)) * 0.6;
-			height += simplex.noise2D(center[0], center[1]) * 0.3;
-			height += simplex.noise2D(center[0]*2, center[1]*2) * 0.1;*/
 
 			let wallNoise = simplex.noise2D(center[0], center[1])/10;
 			let wallColor = new THREE.Vector3(
@@ -217,7 +221,8 @@ export default () => {
 				Math.random() * 0.3 + 0.35
 			);
 			let roofColor = Math.random() * 0.4 + 0.2;
-			let geometry = new THREE.BoxGeometry( ...dim, 1.0 );
+			//let geometry = new THREE.BoxGeometry( ...dim, 1.0 );
+			let geometry = new THREE.BoxGeometry( 1.0, 1.0, 1.0 );
 			let material = CustomLambertMaterial( {
 				uniforms: {
 					uWallColor: { type: "v3", value: wallColor},
@@ -230,7 +235,9 @@ export default () => {
 			} );
 
 			let building = new THREE.Mesh( geometry, material );
-			building.position.set(center[0], center[1], height/2 + center[2]);
+			building.scale.x = dim[0];
+			building.scale.y = dim[1];
+			building.position.set(center[0], center[1], 1.0/2 + center[2]);
 
 			setHeightNoise(building, 1.0, 0.6);
 			return building;
@@ -242,12 +249,25 @@ export default () => {
 		let x = building.position.x/xSize;
 		let y = building.position.y/ySize;
 		height += Math.abs(simplex.noise2D(x * frequency, y * frequency)) * amplitude;
-		height += simplex.noise2D(x, y) * 0.3;
-		height += simplex.noise2D(x*2, y*2) * 0.1;
+		height += Math.abs(simplex.noise2D(x * 5, y * 5)) * 0.3;
+		height += Math.abs(simplex.noise2D(x * 10, y * 10)) * 0.1;
 		building.scale.z = height;
+		building.position.z = height/2;
 	}
-
+	function setStreetWidth(city, width){
+		city.material.uniforms.streetWidth.value = width;
+		console.log(city.material.uniforms)
+		city.material.needsUpdate = true;
+		let buildings = city.children;
+		buildings.forEach((building)=>{
+			building.scale.x = building.scale.x + streetWidth - width;
+			building.scale.y = building.scale.y + streetWidth - width;
+		});
+		streetWidth = width;
+	}
 	return {
-		generate
+		generate,
+		setHeightNoise,
+		setStreetWidth
 	}
 }
