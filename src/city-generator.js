@@ -247,7 +247,6 @@ export default () => {
 			building.scale.x = dim[0];
 			building.scale.y = dim[1];
 			building.position.set(center[0], center[1], 1.0/2 + center[2]);
-
 			setHeightNoise(building, buildingFrequency, buildingHeight);
 			return building;
 		});

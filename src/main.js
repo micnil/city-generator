@@ -26,7 +26,7 @@ document.body.appendChild( renderer.domElement );
 var cityGenerator = CityGenerator();
 var city = cityGenerator.generate(params);
 scene.add( city );
-city.rotation.x -= Math.PI / 4;
+city.rotation.x -= Math.PI / 2;
 var Controls = OrbitControls(THREE);
 var controls = new Controls( camera, renderer.domElement );
 controls.addEventListener( 'change', _.throttle(render, 1/60) );
@@ -41,7 +41,7 @@ scene.add( light );
 
 // directional
 var directionalLight = new THREE.DirectionalLight( 0xffffff, 1.0 );
-directionalLight.position.set( -0.5, 1, 2 );
+directionalLight.position.set( -1, 2, 2 );
 scene.add( directionalLight );
 
 // menu
@@ -83,7 +83,8 @@ gui.add(params, 'streetWidth', 0, 0.5).onChange(_.throttle(streetWidthChanged, 1
 gui.add(params, 'pavementWidth', 0, 0.1).onChange(_.throttle(pavementWidthChanged, 1/10));
 gui.add(params, 'windowHeight', 0, 0.5).onChange(_.throttle(windowHeightChanged, 1/10));
 
-camera.position.z = 4;
+camera.position.z = 5;
+camera.position.y = 5;
 
 function render() {
 	controls.update();
