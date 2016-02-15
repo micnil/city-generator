@@ -73,7 +73,7 @@ function recreate(){
 	render();
 }
 
-gui.add(params, 'amplitude', 0, 1.5).onChange(heightNoiseChanged);
+gui.add(params, 'amplitude', 0, 2).onChange(heightNoiseChanged);
 gui.add(params, 'frequency', 0, 10).onChange(heightNoiseChanged);
 gui.add(params, 'width').onChange(_.throttle(recreate, 1/10));
 gui.add(params, 'length').onChange(_.throttle(recreate, 1/10));

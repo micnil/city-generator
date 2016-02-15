@@ -28945,7 +28945,7 @@ $__System.register('1', ['3', '34', '40', '3e'], function (_export) {
 			directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
 
 			directionalLight.position.set(-1, 2, 2);
-			scene.add(directionalLight);gui.add(params, 'amplitude', 0, 1.5).onChange(heightNoiseChanged);
+			scene.add(directionalLight);gui.add(params, 'amplitude', 0, 2).onChange(heightNoiseChanged);
 			gui.add(params, 'frequency', 0, 10).onChange(heightNoiseChanged);
 			gui.add(params, 'width').onChange(_.throttle(recreate, 1 / 10));
 			gui.add(params, 'length').onChange(_.throttle(recreate, 1 / 10));
