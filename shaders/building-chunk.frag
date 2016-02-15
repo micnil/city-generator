@@ -7,7 +7,8 @@ vec3 wallColor = vec3(uWallColor);
 vec3 roofColor = vec3(uRoofColor);
 vec3 position = vec3(vPosition);
 
-wallColor += wallColor * snoise(vUv/3.0);
+wallColor += wallColor * snoise(vUv*100.0) * 0.04;
+wallColor += wallColor * snoise(vUv*4.0) * 0.06;
 //float xCoord = (absNormal.x > 0.5) ? position.y + dimensions.y / 2.0 : position.x + dimensions.x / 2.0;
 float xCoord = (absNormal.x > 0.5) ? position.y: position.x;
 //position.z += dimensions.z / 2.0;

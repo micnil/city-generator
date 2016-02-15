@@ -4,3 +4,4 @@ scaleMatrix[1].y = length(modelMatrix[1]);
 scaleMatrix[2].z = length(modelMatrix[2]);
 vPosition = scaleMatrix * position;
 vNormal = normal;
+vUv = uv;
