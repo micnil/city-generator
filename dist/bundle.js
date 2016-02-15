@@ -26476,7 +26476,7 @@ _removeDefine();
 (function() {
 var _removeDefine = $__System.get("@@amd-helpers").createDefine();
 define("37", [], function() {
-  return "mat3 scaleMatrix = mat3(1.0);\r\nscaleMatrix[0].x = length(modelMatrix[0]);\r\nscaleMatrix[1].y = length(modelMatrix[1]);\r\nscaleMatrix[2].z = length(modelMatrix[2]);\r\nvPosition = scaleMatrix * position;\r\nvNormal = normal;";
+  return "mat3 scaleMatrix = mat3(1.0);\r\nscaleMatrix[0].x = length(modelMatrix[0]);\r\nscaleMatrix[1].y = length(modelMatrix[1]);\r\nscaleMatrix[2].z = length(modelMatrix[2]);\r\nvPosition = scaleMatrix * position;\r\nvNormal = normal;\r\nvUv = uv;";
 });
 
 _removeDefine();
@@ -26492,7 +26492,7 @@ _removeDefine();
 (function() {
 var _removeDefine = $__System.get("@@amd-helpers").createDefine();
 define("39", [], function() {
-  return "vec3 absNormal = abs(vNormal);\r\n//float windowHeight = 0.1;\r\nfloat windowWidth = 0.09;\r\nvec3 glassColor = vec3(0.1);\r\nvec3 windowEdgeColor = vec3(0.9);\r\nvec3 wallColor = vec3(uWallColor);\r\nvec3 roofColor = vec3(uRoofColor);\r\nvec3 position = vec3(vPosition);\r\n\r\nwallColor += wallColor * snoise(vUv/3.0);\r\n//float xCoord = (absNormal.x > 0.5) ? position.y + dimensions.y / 2.0 : position.x + dimensions.x / 2.0;\r\nfloat xCoord = (absNormal.x > 0.5) ? position.y: position.x;\r\n//position.z += dimensions.z / 2.0;\r\nfloat isWindow = mod(floor(position.z / windowHeight), 2.0);\r\nfloat windowCoord = fract(xCoord / windowWidth);\r\nfloat isWindowEdge = (windowCoord < 0.3) ? 1.0 : 0.0;\r\nvec3 windowColor = mix(glassColor, windowEdgeColor, isWindowEdge);\r\nfloat isRoof = (absNormal.z > 0.5) ? 1.0 : 0.0;\r\n\r\nvec3 color = mix(windowColor, wallColor, isWindow);\r\ncolor = mix(color, roofColor, isRoof);\r\ndiffuseColor = vec4(color, opacity);";
+  return "vec3 absNormal = abs(vNormal);\r\n//float windowHeight = 0.1;\r\nfloat windowWidth = 0.09;\r\nvec3 glassColor = vec3(0.1);\r\nvec3 windowEdgeColor = vec3(0.9);\r\nvec3 wallColor = vec3(uWallColor);\r\nvec3 roofColor = vec3(uRoofColor);\r\nvec3 position = vec3(vPosition);\r\n\r\nwallColor += wallColor * snoise(vUv*100.0) * 0.04;\r\nwallColor += wallColor * snoise(vUv*4.0) * 0.06;\r\n//float xCoord = (absNormal.x > 0.5) ? position.y + dimensions.y / 2.0 : position.x + dimensions.x / 2.0;\r\nfloat xCoord = (absNormal.x > 0.5) ? position.y: position.x;\r\n//position.z += dimensions.z / 2.0;\r\nfloat isWindow = mod(floor(position.z / windowHeight), 2.0);\r\nfloat windowCoord = fract(xCoord / windowWidth);\r\nfloat isWindowEdge = (windowCoord < 0.3) ? 1.0 : 0.0;\r\nvec3 windowColor = mix(glassColor, windowEdgeColor, isWindowEdge);\r\nfloat isRoof = (absNormal.z > 0.5) ? 1.0 : 0.0;\r\n\r\nvec3 color = mix(windowColor, wallColor, isWindow);\r\ncolor = mix(color, roofColor, isRoof);\r\ndiffuseColor = vec4(color, opacity);";
 });
 
 _removeDefine();
