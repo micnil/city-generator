@@ -26742,7 +26742,6 @@ $__System.register('3e', ['29', '30', '32', '34', '35', '36', '37', '38', '39', 
 						building.scale.x = dim[0];
 						building.scale.y = dim[1];
 						building.position.set(center[0], center[1], 1.0 / 2 + center[2]);
-
 						setHeightNoise(building, buildingFrequency, buildingHeight);
 						return building;
 					});
@@ -28927,7 +28926,7 @@ $__System.register('1', ['3', '34', '40', '3e'], function (_export) {
 			city = cityGenerator.generate(params);
 
 			scene.add(city);
-			city.rotation.x -= Math.PI / 4;
+			city.rotation.x -= Math.PI / 2;
 			Controls = OrbitControls(THREE);
 			controls = new Controls(camera, renderer.domElement);
 
@@ -28945,7 +28944,7 @@ $__System.register('1', ['3', '34', '40', '3e'], function (_export) {
 			// directional
 			directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
 
-			directionalLight.position.set(-0.5, 1, 2);
+			directionalLight.position.set(-1, 2, 2);
 			scene.add(directionalLight);gui.add(params, 'amplitude', 0, 1.5).onChange(heightNoiseChanged);
 			gui.add(params, 'frequency', 0, 10).onChange(heightNoiseChanged);
 			gui.add(params, 'width').onChange(_.throttle(recreate, 1 / 10));
@@ -28956,7 +28955,8 @@ $__System.register('1', ['3', '34', '40', '3e'], function (_export) {
 			gui.add(params, 'pavementWidth', 0, 0.1).onChange(_.throttle(pavementWidthChanged, 1 / 10));
 			gui.add(params, 'windowHeight', 0, 0.5).onChange(_.throttle(windowHeightChanged, 1 / 10));
 
-			camera.position.z = 4;;
+			camera.position.z = 5;
+			camera.position.y = 5;;
 
 			render();
 		}
